@@ -1,9 +1,10 @@
-package utils
+package spider.utils
 
 /**
  *  Created by Created by XD.Wang on 2016/9/1.
  *  随机数工具类，对Random做一层薄包装
  */
+
 class StdRandom {
 
     private static Random random
