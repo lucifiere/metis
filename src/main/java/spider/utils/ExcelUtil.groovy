@@ -26,12 +26,11 @@ class ExcelUtil {
         String FEdes = '项目特色:1=地铁沿线；2=教育地产；3=经济住宅；4=投资地产；5=复合地产；6=景观居所；7=宜居生态地产；8=国际化社区；9=低密居所'
         String Pdes = '物业类别：1=普通住宅；2=公寓；3=廉租；4=限价房；5=公租房；6=经适房；7=非普通住宅；8=商业商铺；9=写字楼'
 
-
         (0..61).each {
             switch (it) {
                 case 0: categoryDes << '编号'; break
                 case 1: categoryDes << '名称'; break
-                case 4: categoryDes << '基本信息';explainRow << '所在区域';break
+                case 4: categoryDes << '基本信息'; explainRow << '所在区域'; break
                 case 33: categoryDes << '配套设施'; break
                 case 45: categoryDes << '周边信息'; break
                 case 53: categoryDes << '地理位置'; break
@@ -40,8 +39,9 @@ class ExcelUtil {
 
         }
 
-        (0..61).each {
-            setCel(categoryRow, it,)
+        detailDes.each {
+            int i = 0
+            setCel(categoryRow, i, it as String)
         }
 
         return null
