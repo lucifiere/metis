@@ -1,15 +1,16 @@
-package spider.utils
+package spider.service
 
 import org.apache.poi.hssf.usermodel.HSSFRow
 import org.apache.poi.hssf.usermodel.HSSFSheet
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
+import org.apache.poi.ss.util.CellRangeAddress
 
 /**
  *  Created by XD.Wang on 2016/11/18.
  *  Excel 工具类
  */
 
-class ExcelUtil {
+class ExcelService {
 
     public static HSSFWorkbook getBlankExcel() {
 
@@ -39,12 +40,19 @@ class ExcelUtil {
             }
         }
 
+        def row4Merge = 1
+        sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 1, 3))
+        sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 4, 32))
+        sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 33, 44))
+        sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 45, 52))
+        sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 53, 61))
+
         detailDes.each {
             int i = 0
             categoryRow.createCell(i).setCellValue(it as String)
         }
 
-        return null
+        return excel
     }
 
 }
