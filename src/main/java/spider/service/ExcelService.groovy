@@ -20,11 +20,12 @@ class ExcelUtil {
         HSSFRow detailRow = sheet.createRow(2)
 
         List categoryDes = []
-        List explainDes = []
-        List detailDes = []
-        String PRdes = '产权描述 1=公产房 2=企业产房 3=商业40年 4=商业50年 6=居住70年'
-        String FEdes = '项目特色:1=地铁沿线；2=教育地产；3=经济住宅；4=投资地产；5=复合地产；6=景观居所；7=宜居生态地产；8=国际化社区；9=低密居所'
-        String Pdes = '物业类别：1=普通住宅；2=公寓；3=廉租；4=限价房；5=公租房；6=经适房；7=非普通住宅；8=商业商铺；9=写字楼'
+        List detailDes = ['编号：省市-市区-街道-000', '社区名称', '楼盘名称', '别名', '所属辖区', '所属街道', '环线位置', '地址',
+                          '邮编', '建筑年代', '6月均价', '同比去年', '6月出租均价', '产权描述', '项目特色', '物业类别', '建筑形式',
+                          '建筑高度', '楼栋数', '建筑结构形式', '总建筑面积', '配套公建面积', '住宅面积', '占地面积', '套型比', '当期户数',
+                          '总户数', '入住率', '绿化率', '容积率', '物业费', '附加信息', '供水', '供暖', '供电', '厨房热源', '通讯设备',
+                          '卫生服务', '通讯设备', '安全管理', '社区布局方式', '出入口数量', '卫生服务', '停车位', '幼儿园', '中小学', '大学',
+                          '商场', '医院', '邮局', '银行', '其他', '公交', '地铁', '教育', '医疗', '餐饮', '购物', '环境', '小区内部配套', '小区简介']
 
         (0..61).each {
             switch (it) {
@@ -36,21 +37,14 @@ class ExcelUtil {
                 case 53: categoryDes << '地理位置'; break
                 default: categoryRow << ''; explainRow << ''; detailRow << ''
             }
-
         }
 
         detailDes.each {
             int i = 0
-            setCel(categoryRow, i, it as String)
+            categoryRow.createCell(i).setCellValue(it as String)
         }
 
         return null
-
     }
-
-    static def setCel(HSSFRow row, int cellNo, String des) {
-        row.createCell(cellNo).setCellValue(des)
-    }
-
 
 }
