@@ -16,7 +16,7 @@ class Pattern {
     public static String X_DECORATION_CONDITION = 'html/body/div[8]/div/div[1]/div[1]/ul/li[4]/div[2]'  // 装修状况
     public static String X_PROPERTY_LIMIT = 'html/body/div[8]/div/div[1]/div[1]/ul/li[5]/div[2]'  // 产权年限
     public static String X_LOOP_POSITION = 'html/body/div[8]/div/div[1]/div[1]/ul/li[6]/div[2]'  // 环线位置
-    public static String X_DEVELOPOR ='html/body/div[8]/div/div[1]/div[1]/ul/li[7]/div[2]/a'  // 开发商
+    public static String X_DEVELOPER ='html/body/div[8]/div/div[1]/div[1]/ul/li[7]/div[2]/a'  // 开发商
     public static String X_ADDRESS = 'html/body/div[8]/div/div[1]/div[1]/ul/li[8]/div[2]'  // 楼盘地址
     public static String X_SALE_STATUS = 'html/body/div[8]/div/div[1]/div[2]/ul/li[1]/div[2]'  // 销售状态
     public static String X_FAVORABLE = 'html/body/div[8]/div/div[1]/div[2]/ul/li[2]/div[2]'  // 楼盘优惠
@@ -25,5 +25,5 @@ class Pattern {
     public static String X_SALE_ADDRESS = 'html/body/div[8]/div/div[1]/div[2]/ul/li[5]/div[2]'  // 售楼地址
     public static String X_SALE_TEL = 'html/body/div[8]/div/div[1]/div[2]/ul/li[6]/div[2]'  // 售楼电话
     public static String X_SALE_TYPE = 'html/body/div[8]/div/div[1]/div[2]/ul/li[7]/div[2]/a'  // 在售户型
-    
+
 }
