@@ -1,8 +1,10 @@
 package spider.pageprocessor
 
 import spider.constant.Config
+import spider.pipeline.ExcelPipeline
 import us.codecraft.webmagic.Site
 import us.codecraft.webmagic.Spider
+import us.codecraft.webmagic.pipeline.FilePipeline
 import us.codecraft.webmagic.processor.PageProcessor
 
 /**
@@ -16,7 +18,12 @@ abstract class BasePageProcessor {
     private int THREAD_COUNT = 5
 
     public void start(PageProcessor p){
-        Spider.create(p).addUrl(url).thread(THREAD_COUNT).run()
+        Spider.create(p).
+                addPipeline(new FilePipeline()).
+                addPipeline(new ExcelPipeline()).
+                addUrl(url).
+                thread(THREAD_COUNT).
+                run()
     }
 
     BasePageProcessor(String name, String url){

@@ -36,7 +36,7 @@ class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
 
         if (isSkip(page)) page.setSkip(true)
 
-        page.addTargetRequests(page.getHtml().links().regex('(https://github\\.com/[\\w\\-]+/[\\w\\-]+)').all())
+        page.addTargetRequests(page.getHtml().links().regex(Pattern.R_COURT).all())
     }
 
     @Override

@@ -19,7 +19,7 @@ import spider.service.SpiderService
  */
 class PanelView extends Application{
 
-    private List todo
+    private List todo = []
 
     void start(Stage primaryStage) throws Exception {
         def aj = new CheckBox(Config.AN_JU_KE)
