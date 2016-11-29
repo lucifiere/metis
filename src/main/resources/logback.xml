@@ -24,8 +24,8 @@
             <fileNamePattern>.D:/logs/vod.log.%d{yyyy-MM-dd}</fileNamePattern>
         </rollingPolicy>
     </appender>
-    <logger name="com.tyler" level="info"/>
-    <root level="warn">
+    <logger name="spider" level="info"/>
+    <root level="info">
         <appender-ref ref="Console"/>
         <appender-ref ref="FILE"/>
     </root>

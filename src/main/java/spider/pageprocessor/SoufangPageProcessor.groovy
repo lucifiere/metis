@@ -1,5 +1,8 @@
 package spider.pageprocessor
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import spider.constant.Config
 import spider.constant.Pattern
 import us.codecraft.webmagic.Page
 import us.codecraft.webmagic.ResultItems
@@ -11,12 +14,16 @@ import us.codecraft.webmagic.processor.PageProcessor
  */
 class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
 
+    private Site site = Site.me().setRetryTimes(Config.RETRY_TIME).setSleepTime(Config.WAIT_FOR_NEXT)
+    private final def Logger log = LoggerFactory.getLogger(SoufangPageProcessor.class)
+
     SoufangPageProcessor(String name, String url) {
         super(name, url)
     }
 
     @Override
     void process(Page page) {
+        log.info("正在抓取：" + page.getUrl())
         page.putField('pric', page.getHtml().xpath(Pattern.X_2016_PRICE).toString())
         page.putField('propC', page.getHtml().xpath(Pattern.X_PROPERTY_CATEGORY).toString())
         page.putField('projF', page.getHtml().xpath(Pattern.X_PROJECT_FEATURE).toString())
@@ -34,9 +41,15 @@ class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
         page.putField('saleTe', page.getHtml().xpath(Pattern.X_SALE_TEL).toString())
         page.putField('saleTy', page.getHtml().xpath(Pattern.X_SALE_TYPE).toString())
 
-        if (isSkip(page)) page.setSkip(true)
+        if (isSkip(page)){
+            page.setSkip(true)
+            log.info("跳过：" + page.getUrl())
+        }
 
-        page.addTargetRequests(page.getHtml().links().regex(Pattern.R_COURT).all())
+        List fetchList =  page.getHtml().links().regex(Pattern.R_COURT).all()
+        page.addTargetRequests(fetchList)
+
+        log.info(fetchList.toString())
     }
 
     @Override
