@@ -22,6 +22,7 @@ class PanelView extends Application{
     private List todo = []
 
     void start(Stage primaryStage) throws Exception {
+
         def aj = new CheckBox(Config.AN_JU_KE)
         aj.setOnMouseClicked(new CheckEvent(aj))
         def lj = new CheckBox(Config.LIAN_JIA)

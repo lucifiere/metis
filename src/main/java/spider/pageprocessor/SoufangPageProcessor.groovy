@@ -2,7 +2,6 @@ package spider.pageprocessor
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import spider.constant.Config
 import spider.constant.Pattern
 import us.codecraft.webmagic.Page
 import us.codecraft.webmagic.ResultItems
@@ -14,7 +13,7 @@ import us.codecraft.webmagic.processor.PageProcessor
  */
 class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
 
-    private Site site = Site.me().setRetryTimes(Config.RETRY_TIME).setSleepTime(Config.WAIT_FOR_NEXT)
+    private Site site = Site.me().setRetryTimes(config.getRetryTime()).setSleepTime(config.getWait4Next())
     private final def Logger log = LoggerFactory.getLogger(SoufangPageProcessor.class)
 
     SoufangPageProcessor(String name, String url) {

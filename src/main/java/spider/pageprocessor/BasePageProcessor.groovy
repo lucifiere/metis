@@ -1,5 +1,6 @@
 package spider.pageprocessor
 
+import spider.constant.Config
 import spider.pipeline.ExcelPipeline
 import us.codecraft.webmagic.Spider
 import us.codecraft.webmagic.pipeline.FilePipeline
@@ -14,7 +15,7 @@ abstract class BasePageProcessor {
 
     private String name
     private String url
-    private int THREAD_COUNT = 5
+    protected Config config = Config.getConfig()
 
     public void start(PageProcessor p){
         Spider.create(p).
@@ -23,7 +24,7 @@ abstract class BasePageProcessor {
                 addPipeline(new FilePipeline('D:\\spider\\')).
                 addPipeline(new ExcelPipeline()).
                 addUrl(url).
-                thread(THREAD_COUNT).
+                thread(config.getThreadCount()).
                 run()
     }
 

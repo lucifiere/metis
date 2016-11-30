@@ -8,7 +8,8 @@ import spider.pageprocessor.SoufangPageProcessor
 class SpiderService {
 
     public static void start(List todo){
-        SoufangPageProcessor soufangPageProcessor = new SoufangPageProcessor('搜房网', 'http://newhouse.fang.com/house/s/')
+
+        SoufangPageProcessor soufangPageProcessor = new SoufangPageProcessor('搜房网', 'http://runfenglingshang.fang.com/house/1010684881/housedetail.htm')
         soufangPageProcessor.start(soufangPageProcessor)
     }
 
