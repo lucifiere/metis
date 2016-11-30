@@ -17,18 +17,18 @@ abstract class BasePageProcessor {
     private String url
     protected Config config = Config.getConfig()
 
-    public void start(PageProcessor p){
+    public void start(PageProcessor p) {
         Spider.create(p).
-        setScheduler(new QueueScheduler().
-                setDuplicateRemover(new BloomFilterDuplicateRemover(10000000))).
-                addPipeline(new FilePipeline('D:\\spider\\')).
+                setScheduler(new QueueScheduler().
+                        setDuplicateRemover(new BloomFilterDuplicateRemover(config.getPredictPageNum()))).
+                addPipeline(new FilePipeline(config.getPath())).
                 addPipeline(new ExcelPipeline()).
                 addUrl(url).
                 thread(config.getThreadCount()).
                 run()
     }
 
-    BasePageProcessor(String name, String url){
+    BasePageProcessor(String name, String url) {
         this.name = name
         this.url = url
     }

@@ -20,6 +20,7 @@ import spider.service.SpiderService
 class PanelView extends Application{
 
     private List todo = []
+    private static Config config = Config.getConfig()
 
     void start(Stage primaryStage) throws Exception {
 
@@ -43,7 +44,7 @@ class PanelView extends Application{
         root.setCenter(confirm)
         root.setTop(checkBoxPanel)
 
-        primaryStage.setTitle(Config.SPIDER_NAME)
+        primaryStage.setTitle(config.getSpiderName())
         primaryStage.setScene(new Scene(root, 300, 250))
         primaryStage.show()
     }
