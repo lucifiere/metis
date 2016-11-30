@@ -20,7 +20,7 @@ abstract class BasePageProcessor {
         Spider.create(p).
         setScheduler(new QueueScheduler().
                 setDuplicateRemover(new BloomFilterDuplicateRemover(10000000))).
-                addPipeline(new FilePipeline()).
+                addPipeline(new FilePipeline('D:\\spider\\')).
                 addPipeline(new ExcelPipeline()).
                 addUrl(url).
                 thread(THREAD_COUNT).
@@ -31,5 +31,4 @@ abstract class BasePageProcessor {
         this.name = name
         this.url = url
     }
-
 }

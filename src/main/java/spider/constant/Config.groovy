@@ -10,7 +10,7 @@ class Config {
     /** 爬虫名称 **/
     public static final String SPIDER_NAME = '房产信息爬虫'
     /** 重试次数 **/
-    public static final int RETRY_TIME = 3
+    public static final int RETRY_TIME = 5
     /** 抓取频率 **/
     public static final int WAIT_FOR_NEXT = 2000
     /** 抓取目标 **/

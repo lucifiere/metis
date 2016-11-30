@@ -9,7 +9,7 @@ class Pattern {
 
     /** 搜房网 **/
 //    public static String R_COURT = '.*\\.fang\\.com/house/\\d+/housedetail.htm'  // 小区信息地址
-    public static String R_COURT = '.*\\.fang\\.com/house/'  // 小区信息地址
+    public static String R_COURT = '.*.fang.com/house/*'  // 小区信息地址
     public static String X_2016_PRICE = 'html/body/div[8]/div/div[1]/div[1]/div/div[1]/em'  // 2016年6月均价
     public static String X_PROPERTY_CATEGORY = 'html/body/div[8]/div/div[1]/div[1]/ul/li[1]/div[2]'  // 物业类别
     public static String X_PROJECT_FEATURE = 'html/body/div[8]/div/div[1]/div[1]/ul/li[2]/div[2]/span[@class=\'tag\']'  // 项目特色
