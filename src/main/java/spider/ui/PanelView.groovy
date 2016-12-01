@@ -11,13 +11,14 @@ import javafx.scene.layout.BorderPane
 import javafx.scene.layout.HBox
 import javafx.stage.Stage
 import spider.constant.Config
+import spider.pipeline.ExcelPipeline
 import spider.service.SpiderService
 
 /**
  *  Created by Tyler.Wang on 2016/11/20.
  *  Description : panel
  */
-class PanelView extends Application{
+class PanelView extends Application {
 
     private List todo = []
     private static Config config = Config.getConfig()
@@ -32,16 +33,22 @@ class PanelView extends Application{
         zy.setOnMouseClicked(new CheckEvent(zy))
         def sf = new CheckBox(Config.SO_FANG)
         sf.setOnMouseClicked(new CheckEvent(sf))
-
         def checkBoxPanel = new HBox()
         checkBoxPanel.setAlignment(Pos.CENTER)
-        checkBoxPanel.getChildren().addAll(aj,lj,zy,sf)
+        checkBoxPanel.getChildren().addAll(aj, lj, zy, sf)
+
         def confirm = new Button()
         confirm.setText('启动爬虫')
         confirm.setOnMouseClicked(new BootEvent())
+        def export = new Button()
+        export.setText('导出Excel')
+        export.setOnMouseClicked(new ExportEvent())
+        def functionBoxPanel = new HBox()
+        functionBoxPanel.setAlignment(Pos.CENTER)
+        functionBoxPanel.getChildren().addAll(confirm, export)
 
         def root = new BorderPane()
-        root.setCenter(confirm)
+        root.setCenter(functionBoxPanel)
         root.setTop(checkBoxPanel)
 
         primaryStage.setTitle(config.getSpiderName())
@@ -53,25 +60,32 @@ class PanelView extends Application{
         launch(PanelView.class, args)
     }
 
-    class BootEvent implements EventHandler<MouseEvent>{
+    class BootEvent implements EventHandler<MouseEvent> {
         @Override
         void handle(MouseEvent mouseEvent) {
             def s = new SpiderService()
-            s.start(todo)
+            s.crawl(todo)
         }
     }
 
-    class CheckEvent implements EventHandler<MouseEvent>{
+    class CheckEvent implements EventHandler<MouseEvent> {
 
         private CheckBox c
 
         @Override
         void handle(MouseEvent mouseEvent) {
-            if(c.isSelected()) todo << c.getText()
+            if (c.isSelected()) todo << c.getText()
         }
 
-        public CheckEvent(CheckBox c){
+        public CheckEvent(CheckBox c) {
             this.c = c
+        }
+    }
+
+    class ExportEvent implements EventHandler<MouseEvent> {
+        @Override
+        void handle(MouseEvent mouseEvent) {
+            ExcelPipeline.export()
         }
     }
 

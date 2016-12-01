@@ -1,5 +1,6 @@
 package spider.service
 
+import spider.constant.Pattern
 import spider.pageprocessor.SoufangPageProcessor
 
 /**
@@ -7,9 +8,8 @@ import spider.pageprocessor.SoufangPageProcessor
  */
 class SpiderService {
 
-    public static void start(List todo){
-
-        SoufangPageProcessor soufangPageProcessor = new SoufangPageProcessor('搜房网', 'http://runfenglingshang.fang.com/house/1010684881/housedetail.htm')
+    public static void crawl(List todo){
+        SoufangPageProcessor soufangPageProcessor = new SoufangPageProcessor('搜房网', Pattern.C_TIANJIN_ORIGIN)
         soufangPageProcessor.start(soufangPageProcessor)
     }
 

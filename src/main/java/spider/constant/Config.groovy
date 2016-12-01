@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory
 
 /**
  *  Created by XD.Wang on 2016/11/21.
- *  Config centralized management
+ *  Global Config centralized management
  */
 
 class Config {
