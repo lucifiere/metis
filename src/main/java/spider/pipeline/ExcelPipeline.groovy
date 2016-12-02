@@ -30,8 +30,10 @@ class ExcelPipeline implements Pipeline {
         }
     }
 
-    static void export(){
-        def os = new FileOutputStream(config.getPath() + config.getExcelName() + ".xls")
+    static void export() {
+        String path = config.getPath().endsWith('\\') ? config.getPath() + config.getExcelName() + ".xls" :
+                config.getPath() + '\\' + config.getExcelName() + ".xls"
+        def os = new FileOutputStream(path)
         excel.write(os)
         os.close()
     }

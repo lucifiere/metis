@@ -47,7 +47,7 @@ class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
         List filteredList = []
         filteredList.addAll(unfilteredSet)
         1.times {
-            filteredList << "http://newhouse.${condition.getCity()}.fang.com/house/s/b9${it + 1}/".toString()
+            filteredList << "http://newhouse.${condition.getCity()}.fang.com/house/s/${condition.getDistrict()}b9${it + 1}/".toString()
         }
 
         page.addTargetRequests(filteredList)

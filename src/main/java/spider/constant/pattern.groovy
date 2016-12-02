@@ -6,11 +6,30 @@ package spider.constant
  */
 
 class Pattern {
-
     /** 公共 **/
     public static final String TIAN_JIN = 'tj'
     public static final String CHENG_DU = 'cd'
     public static final String WU_HAN = 'wuhan'
+
+    public static final String ALL = ''
+    public static final String TJ_HE_PING = 'heping/'
+    public static final String TJ_HE_XI = 'hexi/'
+    public static final String TJ_HE_BEI = 'hebei/'
+    public static final String TJ_DONG_LI = 'dongli/'
+    public static final String TJ_BIN_HAI_XIN_QU = 'binhaixinqu/'
+    public static final String TJ_JIN_NAN = 'jinnan/'
+    public static final String TJ_NAN_KAI = 'nankai/'
+    public static final String TJ_BEI_CHEN = 'beichen/'
+    public static final String TJ_JING_HAI = 'jinghai/'
+    public static final String TJ_HONG_QIAO = 'hongqiao/'
+    public static final String TJ_JI_ZHOU = 'jizhou/'
+    public static final String TJ_XI_QING = 'xiqing/'
+    public static final String TJ_NING_HE = 'ninghe/'
+    public static final String TJ_BAO_DI = 'baodi/'
+    public static final String TJ_HE_DONG = 'hedong/'
+    public static final String TJ_WU_QING = 'wuqing/'
+    public static final String TE_NING_HE = 'ninghe/'
+    public static final String OTHER = 'qita2/'
 
     /** 搜房网 **/
     public static final String R_COURT_DETAIL = '.*\\.fang\\.com/house/\\d+/housedetail.htm'  // 小区信息地址

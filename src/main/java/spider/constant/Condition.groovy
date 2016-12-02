@@ -8,7 +8,7 @@ class Condition {
     private static Condition c
 
     private String city = Pattern.TIAN_JIN
-    private String district
+    private String district = ''
 
     String getDistrict() {
         return district
@@ -29,6 +29,10 @@ class Condition {
     private Condition() {}
 
     public static Condition getCondition() {
-        c == null ? new Condition() : c
+        if (c == null) {
+            c = new Condition()
+            return c
+        }
+        c
     }
 }
