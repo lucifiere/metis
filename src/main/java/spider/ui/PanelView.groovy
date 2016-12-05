@@ -64,7 +64,6 @@ class PanelView extends Application {
                 '武清',
                 '其他')
         )
-        district.setDe
         district.getSelectionModel().selectedIndexProperty().addListener(new SelectEvent())
         def filterBoxPanel = new HBox()
         filterBoxPanel.setSpacing(15)

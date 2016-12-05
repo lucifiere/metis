@@ -72,12 +72,22 @@ class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
         page.putField('deve', clearValue(page.getHtml().xpath(Pattern.X_DEVELOPER)))
         page.putField('addr', clearValue(page.getHtml().xpath(Pattern.X_ADDRESS)))
         page.putField('favo', clearValue(page.getHtml().xpath(Pattern.X_FAVORABLE)))
-        page.putField('slaeT', clearValue(page.getHtml().xpath(Pattern.X_SALE_TIME)))
+        page.putField('saleT', clearValue(page.getHtml().xpath(Pattern.X_SALE_TIME)))
         page.putField('tranT', clearValue(page.getHtml().xpath(Pattern.X_TRANSFER_TIME)))
         page.putField('saleA', clearValue(page.getHtml().xpath(Pattern.X_SALE_ADDRESS)))
         page.putField('saleS', clearValue(page.getHtml().xpath(Pattern.X_SALE_STATUS)))
         page.putField('saleTe', clearValue(page.getHtml().xpath(Pattern.X_SALE_TEL)))
         page.putField('saleTy', clearValue(page.getHtml().xpath(Pattern.X_SALE_TYPE)))
+        page.putField('green', clearValue(page.getHtml().xpath(Pattern.X_GREEN)))
+        page.putField('builNu', clearValue(page.getHtml().xpath(Pattern.X_BUILDING_NUM)))
+        page.putField('plotR', clearValue(page.getHtml().xpath(Pattern.X_PLOT_RATIO)))
+        page.putField('allR', clearValue(page.getHtml().xpath(Pattern.X_ALL_RESIDENT)))
+        page.putField('flooB', clearValue(page.getHtml().xpath(Pattern.X_FLOOR_BASE)))
+        page.putField('coveA', clearValue(page.getHtml().xpath(Pattern.X_COVERED_AREA)))
+        page.putField('propF', clearValue(page.getHtml().xpath(Pattern.X_PROPERTY_FEE)))
+        page.putField('courI', clearValue(page.getHtml().xpath(Pattern.X_COURT_INTRODUCE)))
+        page.putField('parkA', clearValue(page.getHtml().xpath(Pattern.X_PARKING_AREA)))
+
 
     }
 

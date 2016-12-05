@@ -46,7 +46,7 @@ class ExcelService {
         sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 4, 32))
         sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 33, 44))
         sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 45, 52))
-        sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 53, 61))
+        sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 53, 63))
 
         List detailDes = ['编号：省市-市区-街道-000', '社区名称', '楼盘名称', '别名', '所属辖区', '所属街道', '环线位置', '地址',
                           '邮编', '建筑年代', '6月均价', '同比去年', '6月出租均价', '产权描述', '项目特色', '物业类别', '开发商', '建筑形式',
@@ -54,7 +54,7 @@ class ExcelService {
                           '总户数', '入住率', '绿化率', '容积率', '物业费', '附加信息', '供水', '供暖', '供电', '厨房热源', '通讯设备',
                           '卫生服务', '通讯设备', '安全管理', '社区布局方式', '出入口数量', '卫生服务', '停车位', '幼儿园', '中小学', '大学',
                           '商场', '医院', '邮局', '银行', '其他', '公交', '地铁', '教育', '医疗', '餐饮', '购物', '环境', '小区内部配套', '小区简介',
-                          '建筑类别']
+                          '建筑类别', '装修情况', '在售状态', '售楼地址', '售楼电话', '在售户型']
 
         i = 0
         detailDes.each {
@@ -67,7 +67,7 @@ class ExcelService {
 
     public static HSSFRow getBlankRow(HSSFSheet sheet, int index) {
         HSSFRow newRow = sheet.createRow(index)
-        65.times {
+        70.times {
             newRow.createCell(it).setCellValue('')
         }
         newRow
