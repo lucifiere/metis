@@ -36,7 +36,6 @@ class Pattern {
     public static final String X_BUILDING_NAME = 'html/body/div[4]/div/div[1]/dl/dd/div[1]/h1/a'  // 楼盘名称/社区名称
     public static final String X_2016_PRICE = 'html/body/div[8]/div/div[1]/div[1]/div/div[1]/em'  // 2016年6月均价
     public static final String X_PROPERTY_CATEGORY = 'html/body/div[8]/div/div[1]/div[1]/ul/li[1]/div[2]'  // 物业类别
-
     public static final String X_BUILDING_CATEGORY = 'html/body/div[8]/div/div[1]/div[1]/ul/li[3]/div[2]/span'  // 建筑类别
     public static final String X_DECORATION_CONDITION = 'html/body/div[8]/div/div[1]/div[1]/ul/li[4]/div[2]'  // 装修状况
     public static final String X_PROPERTY_LIMIT = 'html/body/div[8]/div/div[1]/div[1]/ul/li[5]/div[2]'  // 产权年限

@@ -9,7 +9,6 @@ import javafx.event.EventHandler
 import javafx.geometry.Pos
 import javafx.scene.Scene
 import javafx.scene.control.Button
-import javafx.scene.control.CheckBox
 import javafx.scene.control.ChoiceBox
 import javafx.scene.control.Label
 import javafx.scene.input.MouseEvent
@@ -31,7 +30,6 @@ import spider.service.SpiderService
  */
 class PanelView extends Application {
 
-    private List todo = []
     private static Config config = Config.getConfig()
     public static Condition condition = Condition.getCondition()
 
@@ -117,7 +115,7 @@ class PanelView extends Application {
         @Override
         void handle(MouseEvent mouseEvent) {
             def s = new SpiderService()
-            s.crawl(todo)
+            s.crawl()
         }
     }
 

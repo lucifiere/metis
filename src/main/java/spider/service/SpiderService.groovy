@@ -8,9 +8,14 @@ import spider.pageprocessor.SoufangPageProcessor
  */
 class SpiderService {
 
-    public static void crawl(List todo){
+    public static void crawl(){
         SoufangPageProcessor soufangPageProcessor = new SoufangPageProcessor('搜房网', Pattern.C_TIANJIN_ORIGIN)
         soufangPageProcessor.start(soufangPageProcessor)
+    }
+
+    public Map getSurroundingInfo(String content){
+
+
     }
 
 }

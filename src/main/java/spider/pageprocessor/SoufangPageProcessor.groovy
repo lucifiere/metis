@@ -31,7 +31,6 @@ class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
 
     @Override
     void process(Page page) {
-
         String url = page.getUrl()
         log.info('开始抓取：' + url)
         crawlPageInfo(page)
@@ -99,5 +98,6 @@ class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
     private static String clearValue(Selectable selectable) {
         selectable.regex('>.*<').regex('[^><]+').toString()
     }
+
 
 }
