@@ -32,6 +32,7 @@ class PanelView extends Application {
 
     private static Config config = Config.getConfig()
     public static Condition condition = Condition.getCondition()
+    public static boolean crawling = false
 
     void start(Stage primaryStage) throws Exception {
         // 1. 搜索过滤设置
@@ -73,7 +74,15 @@ class PanelView extends Application {
         confirm.setOnMouseClicked(new BootEvent())
         def export = new Button()
         export.setText('导出Excel')
-        export.setOnMouseClicked(new ExportEvent())
+        export.setOnAction(new EventHandler<ActionEvent>() {
+            void handle(ActionEvent event) {
+                if (crawling) {
+                    String info = '\t爬虫正在工作中，Excel导出功能必须等待抓取任务结束后方可使用！\n\t爬虫的处理速度取决于您的网速、电脑性能等诸多因素，所需时间无法准确估计。\n\t由于抓取的内容较多，程序需要更多的时间去处理相关数据，建议您稍后再试。'
+                    new AlertBox().display("请等待！", info)
+                }
+                ExcelPipeline.export()
+            }
+        })
         def path = new Button()
         path.setText('选择保存路径')
         path.setOnAction(new EventHandler<ActionEvent>() {
@@ -86,7 +95,7 @@ class PanelView extends Application {
                 builder.initialDirectory(file)
                 DirectoryChooser chooser = builder.build()
                 File chosenDir = chooser.showDialog(primaryStage)
-                if(chosenDir == null) return
+                if (chosenDir == null) return
                 String dirPath = chosenDir.getAbsolutePath()
                 config.setPath(dirPath)
             }
@@ -114,15 +123,14 @@ class PanelView extends Application {
     class BootEvent implements EventHandler<MouseEvent> {
         @Override
         void handle(MouseEvent mouseEvent) {
-            def s = new SpiderService()
-            s.crawl()
-        }
-    }
-
-    class ExportEvent implements EventHandler<MouseEvent> {
-        @Override
-        void handle(MouseEvent mouseEvent) {
-            ExcelPipeline.export()
+            if (!crawling) {
+                Thread.start {
+                    crawling = true
+                    def s = new SpiderService()
+                    s.crawl()
+                    crawling = false
+                }
+            }
         }
     }
 
