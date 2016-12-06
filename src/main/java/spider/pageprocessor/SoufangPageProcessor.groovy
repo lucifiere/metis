@@ -86,6 +86,8 @@ class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
         page.putField('propF', clearValue(page.getHtml().xpath(Pattern.X_PROPERTY_FEE)))
         page.putField('courI', clearValue(page.getHtml().xpath(Pattern.X_COURT_INTRODUCE)))
         page.putField('parkA', clearValue(page.getHtml().xpath(Pattern.X_PARKING_AREA)))
+        page.putField('distr', clearValue(page.getHtml().xpath(Pattern.X_DISTRICT)))
+        setSurroundingInfo(page, page.getHtml().xpath(Pattern.X_TRAFFIC).toString(), page.getHtml().xpath(Pattern.X_MATING).toString())
     }
 
     private static boolean isSkip(Page page) {
@@ -97,16 +99,52 @@ class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
         selectable.regex('>.*<').regex('[^><]+').toString()
     }
 
-    private Map getSurroundingInfo(String content) {
-        List capitalPList = ['医院', '诊所']
-        List kindergartenPList = ['幼儿园']
-        List schoolPList = ['小学', '中学', '初级中学', '高级中学', '高中', '初中']
-        List collegePList = ['大学', '学院', '研究所', '研究院', '学校']
-        List mallPList = ['商场', 'mall', '购物中心', '商城', '超市', '商业街', '步行街', '生活广场', '万达广场', '大悦城', '华润万家']
-        List postPList = ['邮局']
-        List bankPList = ['银行', '工行', '中行','农行','工行','交行','建行','华夏','民生','信合','招行','广大','邮储','兴业','浦发','中信','深发展','农商']
-        String 
-
+    private static void setSurroundingInfo(Page page, String traffic, String mating) {
+        String capital = '', kindergarten = '', school = '', college = '', mall = '', post = '', bank = '', restaurant = '', subWay = '', bus = ''
+        ['\\b\\w*?医院', '\\b\\w*?诊所', '\\b\\w*?卫生院'].each {
+            capital += mating =~ it
+        }
+        ['\\b\\w*?幼儿园'].each {
+            kindergarten += mating =~ it
+        }
+        ['\\b\\w*?小学', '\\b\\w*?中学', '\\b\\w*?初级中学', '\\b\\w*?高级中学', '\\b\\w*?高中', '\\b\\w*?初中'].each {
+            school += mating =~ it
+        }
+        ['\\b\\w*?大学', '\\b\\w*?学院', '\\b\\w*?研究所', '\\b\\w*?研究院', '\\b\\w*?学校'].each {
+            college += mating =~ it
+        }
+        ['\\b\\w*?商场', '\\b\\w*?mall', '\\b\\w*?购物中心', '\\b\\w*?商城', '\\b\\w*?超市',
+         '\\b\\w*?商业街', '\\b\\w*?步行街', '\\b\\w*?生活广场', '万达广场', '大悦城', '华润万家'].each {
+            mall += mating =~ it
+        }
+        ['\\b\\w*?邮局'].each {
+            post += mating =~ it
+        }
+        ['\\b\\w*?银行', '工行', '中行', '农行', '工行', '交行', '建行', '华夏', '民生', '信合',
+         '招行', '广大', '邮储', '兴业', '浦发', '中信', '深发展', '农商'].each {
+            bank += mating =~ it
+        }
+        ['\\b\\w*?餐馆', '\\b\\w*?餐厅', '\\b\\w*?酒店', '\\b\\w*?茶楼', '\\b\\w*?饭店'].each {
+            restaurant += mating =~ it
+        }
+        ['\\w号线'].each {
+            subWay += traffic =~ it
+        }
+        ['\\d{1,3}路'].each {
+            bus += traffic =~ it
+        }
+        page.putField('capt', capital)
+        page.putField('kin', kindergarten)
+        page.putField('school', school)
+        page.putField('college', college)
+        page.putField('mall', mall)
+        page.putField('post', post)
+        page.putField('bank', bank)
+        page.putField('res', restaurant)
+        page.putField('subWay', subWay)
+        page.putField('bus', bus)
+        page.putField('other', mating)
+        page.putField('env', traffic)
     }
 
 }

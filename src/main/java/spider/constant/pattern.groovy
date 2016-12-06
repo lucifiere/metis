@@ -28,7 +28,6 @@ class Pattern {
     public static final String TJ_BAO_DI = 'baodi/'
     public static final String TJ_HE_DONG = 'hedong/'
     public static final String TJ_WU_QING = 'wuqing/'
-    public static final String TE_NING_HE = 'ninghe/'
     public static final String OTHER = 'qita2/'
 
     /** 搜房网 **/
@@ -58,6 +57,9 @@ class Pattern {
     public static final String X_PROPERTY_FEE = 'html/body/div[8]/div/div[1]/div[4]/ul/li[9]/div[2]'  // 物业费
     public static final String X_COURT_INTRODUCE = 'html/body/div[8]/div/div[1]/div[6]/p'  // 小区简介
     public static final String X_PARKING_AREA = 'html/body/div[8]/div/div[1]/div[4]/ul/li[5]/div[2]'  // 停车位
+    public static final String X_DISTRICT = 'html/body/div[8]/div/div[1]/div[4]/ul/li[5]/div[2]'  // todo 所属辖区
+    public static final String X_TRAFFIC = 'html/body/div[8]/div/div[1]/div[4]/ul/li[5]/div[2]'  // todo 交通状况
+    public static final String X_MATING = 'html/body/div[8]/div/div[1]/div[4]/ul/li[5]/div[2]'  // todo 项目配套
     public static
     final String X_PROJECT_FEATURE = 'html/body/div[8]/div/div[1]/div[1]/ul/li[2]/div[2]/span[@class=\'tag\']'
     // 项目特色final
