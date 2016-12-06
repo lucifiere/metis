@@ -13,9 +13,4 @@ class SpiderService {
         soufangPageProcessor.start(soufangPageProcessor)
     }
 
-    public Map getSurroundingInfo(String content){
-
-
-    }
-
 }

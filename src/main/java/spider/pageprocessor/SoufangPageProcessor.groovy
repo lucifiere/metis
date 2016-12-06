@@ -86,8 +86,6 @@ class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
         page.putField('propF', clearValue(page.getHtml().xpath(Pattern.X_PROPERTY_FEE)))
         page.putField('courI', clearValue(page.getHtml().xpath(Pattern.X_COURT_INTRODUCE)))
         page.putField('parkA', clearValue(page.getHtml().xpath(Pattern.X_PARKING_AREA)))
-
-
     }
 
     private static boolean isSkip(Page page) {
@@ -99,5 +97,16 @@ class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
         selectable.regex('>.*<').regex('[^><]+').toString()
     }
 
+    private Map getSurroundingInfo(String content) {
+        List capitalPList = ['医院', '诊所']
+        List kindergartenPList = ['幼儿园']
+        List schoolPList = ['小学', '中学', '初级中学', '高级中学', '高中', '初中']
+        List collegePList = ['大学', '学院', '研究所', '研究院', '学校']
+        List mallPList = ['商场', 'mall', '购物中心', '商城', '超市', '商业街', '步行街', '生活广场', '万达广场', '大悦城', '华润万家']
+        List postPList = ['邮局']
+        List bankPList = ['银行', '工行', '中行','农行','工行','交行','建行','华夏','民生','信合','招行','广大','邮储','兴业','浦发','中信','深发展','农商']
+        String 
+
+    }
 
 }

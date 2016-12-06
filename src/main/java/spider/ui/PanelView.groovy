@@ -103,7 +103,7 @@ class PanelView extends Application {
         root.setCenter(centerBoxPanel)
 
         primaryStage.setTitle(config.getSpiderName())
-        primaryStage.setScene(new Scene(root, 300, 250))
+        primaryStage.setScene(new Scene(root, 450, 150))
         primaryStage.show()
     }
 
