@@ -18,12 +18,12 @@ class AlertBox {
     public void display(String title, String message) {
         Stage window = new Stage()
         window.setTitle(title)
-        //modality要使用Modality.APPLICATION_MODEL
+
         window.initModality(Modality.APPLICATION_MODAL)
         window.setMinWidth(350)
         window.setMinHeight(170)
 
-        Button button = new Button("Close the window")
+        Button button = new Button("关闭提示")
         button.setOnAction(new EventHandler<ActionEvent>() {
             void handle(ActionEvent event) {
                 window.close()
@@ -36,7 +36,7 @@ class AlertBox {
         layout.setAlignment(Pos.CENTER)
         Scene scene = new Scene(layout)
         window.setScene(scene)
-        //使用showAndWait()先处理这个窗口，而如果不处理，main中的那个窗口不能响应
+
         window.showAndWait()
     }
 }

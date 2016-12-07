@@ -33,6 +33,7 @@ class Pattern {
     /** 搜房网 **/
     public static final String R_COURT_DETAIL = '.*\\.fang\\.com/house/\\d+/housedetail.htm'  // 小区信息地址
     public static final String R_TOKEN = '[【】，,.。；;：:、"?!]'  //  标点
+    public static final String R_BLANK = '\\s{1,5}'
     public static final String X_BUILDING_NAME = 'html/body/div[4]/div/div[1]/dl/dd/div[1]/h1/a'  // 楼盘名称/社区名称
     public static final String X_2016_PRICE = 'html/body/div[8]/div/div[1]/div[1]/div/div[1]/em'  // 2016年6月均价
     public static final String X_PROPERTY_CATEGORY = 'html/body/div[8]/div/div[1]/div[1]/ul/li[1]/div[2]'  // 物业类别
@@ -63,6 +64,7 @@ class Pattern {
     public static final String X_MATING_O = 'html/body/div[8]/div/div[1]/div[3]/div[2]'  //  项目配套 源
     public static final String X_TRAFFIC = 'html/body/div[8]/div/div[1]/div[3]/div[1]/p'  //  交通状况
     public static final String X_MATING = 'html/body/div[8]/div/div[1]/div[3]/div[2]/p'  //  项目配套
+    public static final String X_BUILDING_HIGH = 'html/body/div[8]/div/div[1]/div[4]/ul/li[10]/div[2]'  // 建筑高度
     public static
     final String X_PROJECT_FEATURE = 'html/body/div[8]/div/div[1]/div[1]/ul/li[2]/div[2]/span[@class=\'tag\']'
     // 项目特色final

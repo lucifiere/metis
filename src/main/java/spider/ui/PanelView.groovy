@@ -33,9 +33,11 @@ class PanelView extends Application {
     private static Config config = Config.getConfig()
     public static Condition condition = Condition.getCondition()
     public static boolean crawling = false
+    public static Thread crawlingThread = null
 
     void start(Stage primaryStage) throws Exception {
         // 1. 搜索过滤设置
+        Label tip = new Label('欢迎使用房产爬虫')
         def cityLabel = new Label('城市')
         def city = new ChoiceBox(FXCollections.observableArrayList(
                 '天津',
@@ -71,7 +73,22 @@ class PanelView extends Application {
         // 2. 操作设置
         def confirm = new Button()
         confirm.setText('启动爬虫')
-        confirm.setOnMouseClicked(new BootEvent())
+        confirm.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            void handle(ActionEvent event) {
+                if (!crawling) {
+                    crawlingThread = Thread.start {
+                        crawling = true
+                        def s = new SpiderService()
+                        s.crawl()
+                        crawling = false
+                    }
+                } else {
+                    String info = '\t爬虫正在工作中，请等待本次任务结束后再启动下次任务！'
+                    new AlertBox().display("请等待！", info)
+                }
+            }
+        })
         def export = new Button()
         export.setText('导出Excel')
         export.setOnAction(new EventHandler<ActionEvent>() {
@@ -79,8 +96,9 @@ class PanelView extends Application {
                 if (crawling) {
                     String info = '\t爬虫正在工作中，Excel导出功能必须等待抓取任务结束后方可使用！\n\t爬虫的处理速度取决于您的网速、电脑性能等诸多因素，所需时间无法准确估计。\n\t由于抓取的内容较多，程序需要更多的时间去处理相关数据，建议您稍后再试。'
                     new AlertBox().display("请等待！", info)
+                } else {
+                    ExcelPipeline.export()
                 }
-                ExcelPipeline.export()
             }
         })
         def path = new Button()
@@ -100,14 +118,26 @@ class PanelView extends Application {
                 config.setPath(dirPath)
             }
         })
+        def interrupt = new Button()
+        interrupt.setText('终止任务')
+        interrupt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            void handle(ActionEvent mouseEvent) {
+                if (crawlingThread) crawlingThread.stop()
+                if (crawling){
+                    crawling = false
+                    crawlingThread = null
+                }
+            }
+        })
         def functionBoxPanel = new HBox()
         functionBoxPanel.setAlignment(Pos.CENTER)
-        functionBoxPanel.getChildren().addAll(confirm, path, export)
+        functionBoxPanel.getChildren().addAll(confirm, path, export, interrupt)
 
         def centerBoxPanel = new VBox()
         centerBoxPanel.setSpacing(10)
         centerBoxPanel.setAlignment(Pos.CENTER)
-        centerBoxPanel.getChildren().addAll(filterBoxPanel, functionBoxPanel)
+        centerBoxPanel.getChildren().addAll(filterBoxPanel, functionBoxPanel, tip)
         def root = new BorderPane()
         root.setCenter(centerBoxPanel)
 
@@ -118,20 +148,6 @@ class PanelView extends Application {
 
     public static void main(String[] args) {
         launch(PanelView.class, args)
-    }
-
-    class BootEvent implements EventHandler<MouseEvent> {
-        @Override
-        void handle(MouseEvent mouseEvent) {
-            if (!crawling) {
-                Thread.start {
-                    crawling = true
-                    def s = new SpiderService()
-                    s.crawl()
-                    crawling = false
-                }
-            }
-        }
     }
 
     class SelectEvent implements ChangeListener<Number> {
