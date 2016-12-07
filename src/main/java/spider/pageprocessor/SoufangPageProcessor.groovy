@@ -89,6 +89,8 @@ class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
         page.putField('courI', clearValue(page.getHtml().xpath(Pattern.X_COURT_INTRODUCE)))
         page.putField('parkA', clearValue(page.getHtml().xpath(Pattern.X_PARKING_AREA)))
         page.putField('distr', clearValue(page.getHtml().xpath(Pattern.X_DISTRICT)))
+        page.putField('traffic', clearValue(page.getHtml().xpath(Pattern.X_MATING)))
+        page.putField('env', clearValue(page.getHtml().xpath(Pattern.X_TRAFFIC)))
         setSurroundingInfo(page, page.getHtml().xpath(Pattern.X_TRAFFIC).toString(), page.getHtml().xpath(Pattern.X_MATING).toString())
     }
 
@@ -102,42 +104,55 @@ class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
     }
 
     private static void setSurroundingInfo(Page page, String traffic, String mating) {
+        if (!traffic || !mating) return
+        traffic = traffic.replaceAll('<br>', '\n').replaceAll('<p>', '\n')
+        mating = mating.replaceAll('<br>', '\n').replaceAll('<p>', '\n')
+        mating = mating.replaceAll(Pattern.R_TOKEN, '\n')
+        traffic = traffic.replaceAll(Pattern.R_TOKEN, '\n')
         String capital = '', kindergarten = '', school = '', college = '', mall = '', post = '', bank = '', restaurant = '', subWay = '', bus = ''
-        ['\\b\\w*?医院', '\\b\\w*?诊所', '\\b\\w*?卫生院'].each {
+        ['[、:：,， >】].*?医院', '[、:：,， >】].*?诊所', '[、:：,， >】].*?卫生院'].each {
             def m = java.util.regex.Pattern.compile(it).matcher(mating)
-            while(m.find()) capital += m.group() + '  ;'
+            while (m.find()) {
+                capital = m.group() + ';'
+            }
         }
-        ['\\b\\w*?幼儿园'].each {
-            Matcher m = null;
-            m =~ it
-            m.group()
-            kindergarten += mating
+        ['[、:：,， >】].*?w*?幼儿园'].each {
+            def m = java.util.regex.Pattern.compile(it).matcher(mating)
+            while (m.find()) kindergarten += m.group() + ';'
         }
-        ['\\b\\w*?小学', '\\b\\w*?中学', '\\b\\w*?初级中学', '\\b\\w*?高级中学', '\\b\\w*?高中', '\\b\\w*?初中'].each {
-            school += mating =~ it
+        ['[、:：,， >】].*?w*?小学', '[、:：,， >】].*?w*?中学', '[、:：,， >】].*?w*?初级中学', '[、:：,， >】].*?w*?高级中学', '[、:：,， >】].*?w*?高中', '[、:：,， >】].*?w*?初中'].each {
+            def m = java.util.regex.Pattern.compile(it).matcher(mating)
+            while (m.find()) school += m.group() + ';'
         }
-        ['\\b\\w*?大学', '\\b\\w*?学院', '\\b\\w*?研究所', '\\b\\w*?研究院', '\\b\\w*?学校'].each {
-            college += mating =~ it
+        ['[、:：,， >】].*?w*?大学', '[、:：,， >】].*?w*?学院', '[、:：,， >】].*?w*?研究所', '[、:：,， >】].*?w*?研究院', '[、:：,， >】].*?w*?学校'].each {
+            def m = java.util.regex.Pattern.compile(it).matcher(mating)
+            while (m.find()) college += m.group() + ';'
         }
-        ['\\b\\w*?商场', '\\b\\w*?mall', '\\b\\w*?购物中心', '\\b\\w*?商城', '\\b\\w*?超市',
-         '\\b\\w*?商业街', '\\b\\w*?步行街', '\\b\\w*?生活广场', '万达广场', '大悦城', '华润万家'].each {
-            mall += mating =~ it
+        ['[、:：,， >】].*?w*?商场', '[、:：,， >】].*?w*?mall', '[、:：,， >】].*?w*?购物中心', '[、:：,， >】].*?w*?商城', '[、:：,， >】].*?w*?超市',
+         '[、:：,， >】].*?w*?商业街', '[、:：,， >】].*?w*?步行街', '[、:：,， >】].*?w*?生活广场', '万达广场', '大悦城', '华润万家'].each {
+            def m = java.util.regex.Pattern.compile(it).matcher(mating)
+            while (m.find()) mall += m.group() + ';'
         }
-        ['\\b\\w*?邮局'].each {
-            post += mating =~ it
+        ['[、:：,， >】].*?w*?邮局'].each {
+            def m = java.util.regex.Pattern.compile(it).matcher(mating)
+            while (m.find()) post += m.group() + ';'
         }
-        ['\\b\\w*?银行', '工行', '中行', '农行', '工行', '交行', '建行', '华夏', '民生', '信合',
+        ['[、:：,， >】].*?w*?银行', '工行', '中行', '农行', '工行', '交行', '建行', '华夏', '民生', '信合',
          '招行', '广大', '邮储', '兴业', '浦发', '中信', '深发展', '农商'].each {
-            bank += mating =~ it
+            def m = java.util.regex.Pattern.compile(it).matcher(mating)
+            while (m.find()) bank += m.group() + ';'
         }
-        ['\\b\\w*?餐馆', '\\b\\w*?餐厅', '\\b\\w*?酒店', '\\b\\w*?茶楼', '\\b\\w*?饭店'].each {
-            restaurant += mating =~ it
+        ['[、:：,， >】].*?w*?餐馆', '[、:：,， >】].*?w*?餐厅', '[、:：,， >】].*?w*?酒店', '[、:：,， >】].*?w*?茶楼', '[、:：,， >】].*?w*?饭店'].each {
+            def m = java.util.regex.Pattern.compile(it).matcher(mating)
+            while (m.find()) restaurant += m.group() + ';'
         }
         ['\\w号线'].each {
-            subWay += traffic =~ it
+            def m = java.util.regex.Pattern.compile(it).matcher(traffic)
+            while (m.find()) subWay += m.group() + ';'
         }
         ['\\d{1,3}路'].each {
-            bus += traffic =~ it
+            def m = java.util.regex.Pattern.compile(it).matcher(traffic)
+            while (m.find()) bus += m.group() + ';'
         }
         page.putField('capt', capital)
         page.putField('kin', kindergarten)
@@ -149,8 +164,6 @@ class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
         page.putField('res', restaurant)
         page.putField('subWay', subWay)
         page.putField('bus', bus)
-        page.putField('other', mating)
-        page.putField('env', traffic)
     }
 
 }

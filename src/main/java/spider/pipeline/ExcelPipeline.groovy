@@ -23,7 +23,7 @@ class ExcelPipeline implements Pipeline {
             HSSFRow newRow = ExcelService.getBlankRow(excel.getSheet('Sheet1'), ++rowCount)
             newRow.getCell(1).setCellValue(resultItems.get('builN') as String)
             newRow.getCell(2).setCellValue(resultItems.get('builN') as String)
-            newRow.getCell(4).setCellValue(resultItems.get('distr') as String)
+            newRow.getCell(4).setCellValue((resultItems.get('distr') as String).replaceAll('楼盘', '区'))
             newRow.getCell(6).setCellValue(resultItems.get('loopP') as String)
             newRow.getCell(7).setCellValue(resultItems.get('addr') as String)
             newRow.getCell(10).setCellValue(resultItems.get('pric') as String)

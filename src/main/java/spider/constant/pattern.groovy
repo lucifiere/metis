@@ -32,6 +32,7 @@ class Pattern {
 
     /** 搜房网 **/
     public static final String R_COURT_DETAIL = '.*\\.fang\\.com/house/\\d+/housedetail.htm'  // 小区信息地址
+    public static final String R_TOKEN = '[【】，,.。；;：:、"?!]'  //  标点
     public static final String X_BUILDING_NAME = 'html/body/div[4]/div/div[1]/dl/dd/div[1]/h1/a'  // 楼盘名称/社区名称
     public static final String X_2016_PRICE = 'html/body/div[8]/div/div[1]/div[1]/div/div[1]/em'  // 2016年6月均价
     public static final String X_PROPERTY_CATEGORY = 'html/body/div[8]/div/div[1]/div[1]/ul/li[1]/div[2]'  // 物业类别
@@ -57,9 +58,11 @@ class Pattern {
     public static final String X_PROPERTY_FEE = 'html/body/div[8]/div/div[1]/div[4]/ul/li[9]/div[2]'  // 物业费
     public static final String X_COURT_INTRODUCE = 'html/body/div[8]/div/div[1]/div[6]/p'  // 小区简介
     public static final String X_PARKING_AREA = 'html/body/div[8]/div/div[1]/div[4]/ul/li[5]/div[2]'  // 停车位
-    public static final String X_DISTRICT = 'html/body/div[3]/div[1]/p/a[3]'  // todo 所属辖区
-    public static final String X_TRAFFIC = 'html/body/div[8]/div/div[1]/div[3]/div[1]'  // todo 交通状况
-    public static final String X_MATING = 'html/body/div[8]/div/div[1]/div[3]/div[2]'  // todo 项目配套
+    public static final String X_DISTRICT = 'html/body/div[3]/div[1]/p/a[3]'  //  所属辖区
+    public static final String X_TRAFFIC_O = 'html/body/div[8]/div/div[1]/div[3]/div[1]'  //  交通状况 源
+    public static final String X_MATING_O = 'html/body/div[8]/div/div[1]/div[3]/div[2]'  //  项目配套 源
+    public static final String X_TRAFFIC = 'html/body/div[8]/div/div[1]/div[3]/div[1]/p'  //  交通状况
+    public static final String X_MATING = 'html/body/div[8]/div/div[1]/div[3]/div[2]/p'  //  项目配套
     public static
     final String X_PROJECT_FEATURE = 'html/body/div[8]/div/div[1]/div[1]/ul/li[2]/div[2]/span[@class=\'tag\']'
     // 项目特色final
