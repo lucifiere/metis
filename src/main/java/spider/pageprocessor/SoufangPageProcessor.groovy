@@ -11,6 +11,8 @@ import us.codecraft.webmagic.Site
 import us.codecraft.webmagic.processor.PageProcessor
 import us.codecraft.webmagic.selector.Selectable
 
+import java.util.regex.Matcher
+
 /**
  *  Created by XD.Wang on 2016/11/23.
  */
@@ -102,10 +104,14 @@ class SoufangPageProcessor extends BasePageProcessor implements PageProcessor {
     private static void setSurroundingInfo(Page page, String traffic, String mating) {
         String capital = '', kindergarten = '', school = '', college = '', mall = '', post = '', bank = '', restaurant = '', subWay = '', bus = ''
         ['\\b\\w*?医院', '\\b\\w*?诊所', '\\b\\w*?卫生院'].each {
-            capital += mating =~ it
+            def m = java.util.regex.Pattern.compile(it).matcher(mating)
+            while(m.find()) capital += m.group() + '  ;'
         }
         ['\\b\\w*?幼儿园'].each {
-            kindergarten += mating =~ it
+            Matcher m = null;
+            m =~ it
+            m.group()
+            kindergarten += mating
         }
         ['\\b\\w*?小学', '\\b\\w*?中学', '\\b\\w*?初级中学', '\\b\\w*?高级中学', '\\b\\w*?高中', '\\b\\w*?初中'].each {
             school += mating =~ it
