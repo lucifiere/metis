@@ -3,6 +3,7 @@ package spider.pipeline
 import org.apache.poi.hssf.usermodel.HSSFRow
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import spider.constant.Config
+import spider.constant.Pattern
 import spider.service.ExcelService
 import spider.service.SpiderService
 import us.codecraft.webmagic.ResultItems
@@ -20,7 +21,9 @@ class ExcelPipeline implements Pipeline {
 
     @Override
     void process(ResultItems resultItems, Task task) {
-        if (excel != null) {
+        if(!excel) return
+        int origin = resultItems.get('origin') as int
+        if (origin == Pattern.ORIGIN_NEW) {
             HSSFRow newRow = ExcelService.getBlankRow(excel.getSheet('Sheet1'), ++rowCount)
             newRow.getCell(1).setCellValue(resultItems.get('builN') as String)
             newRow.getCell(2).setCellValue(resultItems.get('builN') as String)
@@ -71,6 +74,9 @@ class ExcelPipeline implements Pipeline {
             newRow.getCell(9).setCellValue(age)
             newRow.getCell(32).setCellValue(extraInfo)
             newRow.getCell(55).setCellValue(edu)
+        }
+        if (origin == Pattern.ORIGIN_OLD) {
+
         }
     }
 
