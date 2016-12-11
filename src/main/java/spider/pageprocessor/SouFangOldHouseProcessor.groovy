@@ -10,7 +10,6 @@ import us.codecraft.webmagic.Page
 import us.codecraft.webmagic.ResultItems
 import us.codecraft.webmagic.Site
 import us.codecraft.webmagic.processor.PageProcessor
-import us.codecraft.webmagic.selector.Selectable
 
 /**
  *  Created by Tyler.Wang on 2016/12/10.
@@ -25,7 +24,7 @@ class SouFangOldHouseProcessor extends BasePageProcessor implements PageProcesso
             .setUserAgent(Config.AGENT)
             .setCharset('GBK')
 
-    private final def Logger log = LoggerFactory.getLogger(SouFangNewHouseProcessor.class)
+    private final def Logger log = LoggerFactory.getLogger(SouFangOldHouseProcessor.class)
     private Condition condition = Condition.getCondition()
 
     SouFangOldHouseProcessor(String name, String url) {
@@ -57,16 +56,17 @@ class SouFangOldHouseProcessor extends BasePageProcessor implements PageProcesso
     }
 
     private static void crawlPageInfo(Page page) {
+        page.putField('buliN', cleanVaule(page.getHtml().xpath(Pattern.X_OH_BUILDING_NAME).get()))
         page.putField('origin', Pattern.ORIGIN_OLD)
-        String baseInfo = page.getHtml().xpath(Pattern.X_M_BASE_INFO).get().replaceAll('<.*?>', " ")
+        String baseInfo = cleanVaule(page.getHtml().xpath(Pattern.X_M_BASE_INFO).get())
         page.putField("baseInfo", baseInfo)
-        String courtIntroduce = page.getHtml().xpath(Pattern.X_M_COURT_INTRODUCE).get().replaceAll('<.*?>', " ")
+        String courtIntroduce = cleanVaule(page.getHtml().xpath(Pattern.X_M_COURT_INTRODUCE).get())
         page.putField("courtIntroduce", courtIntroduce)
-        String matingInfo = page.getHtml().xpath(Pattern.X_M_MATING_INFO).get().replaceAll('<.*?>', " ")
+        String matingInfo = cleanVaule(page.getHtml().xpath(Pattern.X_M_MATING_INFO).get())
         page.putField("matingInfo", matingInfo)
-        String surrounding = page.getHtml().xpath(Pattern.X_M_SURROUNDING).get().replaceAll('<.*?>', " ")
+        String surrounding = cleanVaule(page.getHtml().xpath(Pattern.X_M_SURROUNDING).get())
         page.putField("surrounding", surrounding)
-        String traffic = page.getHtml().xpath(Pattern.X_M_TRAFFIC).get().replaceAll('<.*?>', " ")
+        String traffic = cleanVaule(page.getHtml().xpath(Pattern.X_M_TRAFFIC).get())
         page.putField("traffic", traffic)
         SpiderService.analysisInfo(page, [baseInfo, courtIntroduce, matingInfo, surrounding, traffic])
     }
@@ -79,6 +79,14 @@ class SouFangOldHouseProcessor extends BasePageProcessor implements PageProcesso
     private static boolean isSkip(Page page) {
         ResultItems res = page.getResultItems()
         return res.get('builN') == null && res.get('baseInfo') == null
+    }
+
+    // 去除HTML换行不闭合标签、HTML普通标签、HTML占位符
+    private static String cleanVaule(String info) {
+        info?.replaceAll("<*?\\n", '')?.replaceAll('<.*?>', " ")?.
+                replaceAll("&nbsp;", ' ')?.
+                replaceAll("&gt;", '')?.
+                replaceAll("&lt;", '')
     }
 
 }
