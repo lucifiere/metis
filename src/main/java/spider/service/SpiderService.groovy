@@ -2,7 +2,6 @@ package spider.service
 
 import spider.constant.Pattern
 import spider.pageprocessor.SouFangOldHouseProcessor
-import spider.pageprocessor.SouFangNewHouseProcessor
 import us.codecraft.webmagic.Page
 
 /**
@@ -41,7 +40,7 @@ class SpiderService {
     }
 
     // 抽取周边信息
-    public static void analysisSurroundingInfo(Page page, String traffic, String mating) {
+    public static void analysisInfoWithoutFormat(Page page, String traffic, String mating) {
         if (!traffic || !mating) return
         String trafficClean = traffic.replaceAll('<br>', '\n').replaceAll('<p>', '\n')
         String matingClean = mating.replaceAll('<br>', '\n').replaceAll('<p>', '\n')
@@ -108,7 +107,7 @@ class SpiderService {
         page.putField('env', trafficClean)
     }
 
-    public static void analysisInfo(Page page, List origins) {
+    public static void analysisInfoWithFormat(Page page, List origins) {
         for (String origin in origins) {
             if (!origin) continue
             match(page, origin, '小区地址', 'addr')
@@ -131,6 +130,8 @@ class SpiderService {
             match(page, origin, '供    水', 'water')
             match(page, origin, '供    暖', 'warm')
             match(page, origin, '供    电', 'elec')
+            match(page, origin, '安全管理', 'elec')
+            match(page, origin, '社区布局方式', 'layout')
             match(page, origin, '小区简介', 'courI')
             match(page, origin, '项目特色', 'projF')
             match(page, origin, '物业办公电话', 'tel')
@@ -143,6 +144,19 @@ class SpiderService {
             match(page, origin, '别名', 'oName')
             match(page, origin, '出租本月均价', 'rentP')
             match(page, origin, '出租本月走势', 'rentT')
+            match(page, origin, '停车位', 'parkA')
+            match(page, origin, ['医院'], 'capt')
+            match(page, origin, ['幼儿园'], 'kin')
+            match(page, origin, ['中小学'], 'school')
+            match(page, origin, ['大学'], 'college')
+            match(page, origin, ['商场'], 'mall')
+            match(page, origin, ['邮局'], 'post')
+            match(page, origin, ['银行'], 'bank')
+            match(page, origin, ['餐饮', '餐馆', '饮食'], 'res')
+            match(page, origin, ['地铁', '轨道交通'], 'subWay')
+            match(page, origin, ['公交', '公共交通'], 'bus')
+            match(page, origin, '其他', 'env')
+            match(page, origin, '小区内部配套', 'other')
 
 //            def m0 = java.util.regex.Pattern.compile('小区地址\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
 //            while (m0.find()) page.putField('address', m0.group())
@@ -216,5 +230,19 @@ class SpiderService {
         while (m.find()) page.putField(key, m.group()?.replaceAll("${item}\\s{0,5}：\\s{0,5}", ''))
     }
 
+    private static void match(Page page, String origin, List items, String key) {
+        String tmp = ''
+        for (String s : items) {
+            def m = java.util.regex.Pattern.compile("${s}\\s{0,5}：\\s{0,5}.*?\\s").matcher(origin)
+            while (m.find()) {
+                tmp += m.group() + ';'
+            }
+            tmp?.replaceAll("${s}\\s{0,5}：\\s{0,5}", '')
+        }
+        if(tmp == ''){
+            analysisInfoWithoutFormat(page, origin, origin)
+        }
+        page.putField(key, tmp)
+    }
 
 }

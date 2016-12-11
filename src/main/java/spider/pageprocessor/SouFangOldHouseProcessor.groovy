@@ -68,7 +68,7 @@ class SouFangOldHouseProcessor extends BasePageProcessor implements PageProcesso
         page.putField("surrounding", surrounding)
         String traffic = cleanVaule(page.getHtml().xpath(Pattern.X_M_TRAFFIC).get())
         page.putField("traffic", traffic)
-        SpiderService.analysisInfo(page, [baseInfo, courtIntroduce, matingInfo, surrounding, traffic])
+        SpiderService.analysisInfoWithFormat(page, [baseInfo, courtIntroduce, matingInfo, surrounding, traffic])
     }
 
     @Override

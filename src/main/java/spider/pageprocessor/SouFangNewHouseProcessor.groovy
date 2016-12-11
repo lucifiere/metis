@@ -92,7 +92,7 @@ class SouFangNewHouseProcessor extends BasePageProcessor implements PageProcesso
         page.putField('parkA', clearValue(page.getHtml().xpath(Pattern.X_PARKING_AREA)))
         page.putField('distr', clearValue(page.getHtml().xpath(Pattern.X_DISTRICT)))
         page.putField('builH', clearValue(page.getHtml().xpath(Pattern.X_BUILDING_HIGH)))
-        SpiderService.analysisSurroundingInfo(page, page.getHtml().xpath(Pattern.X_TRAFFIC).toString(), page.getHtml().xpath(Pattern.X_MATING).toString())
+        SpiderService.analysisInfoWithoutFormat(page, page.getHtml().xpath(Pattern.X_TRAFFIC).toString(), page.getHtml().xpath(Pattern.X_MATING).toString())
     }
 
     private static boolean isSkip(Page page) {
