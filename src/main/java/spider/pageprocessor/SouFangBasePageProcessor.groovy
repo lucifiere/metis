@@ -11,7 +11,7 @@ import us.codecraft.webmagic.scheduler.component.BloomFilterDuplicateRemover
 /**
  *  Created by XD.Wang on 2016/11/23.
  */
-abstract class BasePageProcessor {
+abstract class SouFangBasePageProcessor {
 
     private String name
     private String url
@@ -22,14 +22,14 @@ abstract class BasePageProcessor {
                 setScheduler(new QueueScheduler().
                 setDuplicateRemover(new BloomFilterDuplicateRemover(config.getPredictPageNum()))).
                 addPipeline(new FilePipeline(config.getPath())).
-                addPipeline(new ExcelPipeline()).
+                addPipeline(ExcelPipeline.getExcelPipeline()).
                 addUrl(url).
                 thread(config.getThreadCount())
         s.run()
         s
     }
 
-    BasePageProcessor(String name, String url) {
+    SouFangBasePageProcessor(String name, String url) {
         this.name = name
         this.url = url
     }

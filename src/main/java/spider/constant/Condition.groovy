@@ -9,6 +9,7 @@ class Condition {
 
     private String city = Pattern.TIAN_JIN
     private String district = ''
+    private String ohDistrict = ''
 
     String getDistrict() {
         return district
@@ -24,6 +25,14 @@ class Condition {
 
     void setCity(String city) {
         this.city = city
+    }
+
+    String getOhDistrict() {
+        return ohDistrict
+    }
+
+    void setOhDistrict(String ohDistrict) {
+        this.ohDistrict = ohDistrict
     }
 
     private Condition() {}

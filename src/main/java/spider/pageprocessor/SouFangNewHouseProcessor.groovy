@@ -16,7 +16,7 @@ import us.codecraft.webmagic.selector.Selectable
  *  Created by XD.Wang on 2016/11/23.
  *  搜房网二手房页面处理器
  */
-class SouFangNewHouseProcessor extends BasePageProcessor implements PageProcessor {
+class SouFangNewHouseProcessor extends SouFangBasePageProcessor implements PageProcessor {
 
     private Site site = Site.me()
             .setRetryTimes(config.getRetryTime())
@@ -48,7 +48,7 @@ class SouFangNewHouseProcessor extends BasePageProcessor implements PageProcesso
 
         List filteredList = []
         filteredList.addAll(unfilteredSet)
-        100.times {
+        1.times {
             filteredList << "http://newhouse.${condition.getCity()}.fang.com/house/s/${condition.getDistrict()}b9${it + 1}/".toString()
         }
 
@@ -65,6 +65,7 @@ class SouFangNewHouseProcessor extends BasePageProcessor implements PageProcesso
     private static void crawlPageInfo(Page page) {
         page.putField('origin', Pattern.ORIGIN_NEW)
         page.putField('builN', clearValue(page.getHtml().xpath(Pattern.X_BUILDING_NAME)))
+        page.putField('oName', clearValue(page.getHtml().xpath(Pattern.X_OTHER_NAME)))
         page.putField('pric', clearValue(page.getHtml().xpath(Pattern.X_2016_PRICE)))
         page.putField('propC', clearValue(page.getHtml().xpath(Pattern.X_PROPERTY_CATEGORY)))
         page.putField('projF', clearValue(page.getHtml().xpath(Pattern.X_PROJECT_FEATURE)))
@@ -101,7 +102,7 @@ class SouFangNewHouseProcessor extends BasePageProcessor implements PageProcesso
     }
 
     private static String clearValue(Selectable selectable) {
-        selectable.regex('>.*<').regex('[^><]+').toString()?.replaceAll('&nbsp', '')
+        selectable.regex('>.*<').regex('[^><]+').toString()?.replaceAll('&nbsp', '')?.replaceAll('\n','')?.trim()
     }
 
 }

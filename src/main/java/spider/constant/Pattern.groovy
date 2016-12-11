@@ -11,7 +11,6 @@ class Pattern {
     public static final String R_BLANK = '\\s{1,5}'
     public static final int ORIGIN_NEW = 0
     public static final int ORIGIN_OLD = 1
-
     /** 城市 **/
     public static final String TIAN_JIN = 'tj'
     public static final String CHENG_DU = 'cd'
@@ -34,10 +33,38 @@ class Pattern {
     public static final String TJ_BAO_DI = 'baodi/'
     public static final String TJ_HE_DONG = 'hedong/'
     public static final String TJ_WU_QING = 'wuqing/'
-    public static final String OTHER = 'qita2/'
+    public static final String TJ_OTHER = 'qita2/'
+    /** 成都城区 **/
+    public static final String CD_JIN_JIANG = 'jinjiang/'
+    public static final String CD_QING_YANG = 'qingyang/'
+    public static final String CD_JIN_NIU = 'jinniu/'
+    public static final String CD_WU_HOU = 'wuhou/'
+    public static final String CD_CHENG_HUA = 'chenghua/'
+    public static final String CD_LONG_QUAN_YI = 'longquanyi/'
+    public static final String CD_QING_BAI_JIANG = 'qingbaijiang/'
+    public static final String CD_XIN_DU = 'xindu/'
+    public static final String CD_WEN_JIANG = 'wenjiang/'
+    public static final String CD_SHUANG_LIU = 'shuangliu/'
+    public static final String CD_OTHER = 'qita/'
+    /** 武汉城区 **/
+    public static final String WH_JIANG_AN = 'jiangan1/'
+    public static final String WH_JIANG_HAN = 'jianghan1/'
+    public static final String WH_QIAO_KOU = 'qiaokou2/'
+    public static final String WH_HAN_YANG = 'hanyang1/'
+    public static final String WH_WU_CHANG = 'wuchang1/'
+    public static final String WH_QING_SHAN = 'qingshan2/'
+    public static final String WH_HONG_SHAN = 'hongshan1/'
+    public static final String WH_DONG_XI_HU = 'dongxihu1/'
+    public static final String WH_HAN_NAN = 'hannan2/'
+    public static final String WH_CAI_DIAN = 'caidian2/'
+    public static final String WH_JIANG_XIA = 'jiangxia2/'
+    public static final String WH_HUANG_PI = 'huangpi2/'
+    public static final String WH_OTHER = 'qita/'
+
     /** 搜房网新房 **/
     public static final String R_COURT_DETAIL = '.*\\.fang\\.com/house/\\d+/housedetail.htm'  // 小区信息地址
     public static final String X_BUILDING_NAME = 'html/body/div[4]/div/div[1]/dl/dd/div[1]/h1/a'  // 楼盘名称/社区名称
+    public static final String X_OTHER_NAME = 'html/body/div[4]/div/div[1]/dl/dd/div[1]/span'  // 楼盘名称/社区名称
     public static final String X_2016_PRICE = 'html/body/div[8]/div/div[1]/div[1]/div/div[1]/em'  // 2016年6月均价
     public static final String X_PROPERTY_CATEGORY = 'html/body/div[8]/div/div[1]/div[1]/ul/li[1]/div[2]'  // 物业类别
     public static final String X_BUILDING_CATEGORY = 'html/body/div[8]/div/div[1]/div[1]/ul/li[3]/div[2]/span'  // 建筑类别
@@ -113,5 +140,7 @@ class Pattern {
     public static final String X_M_COURT_INTRODUCE = 'html/body/div[4]/div[4]/div[1]/div[4]/dl'  // 小区介绍
     public static final String X_M_TRAFFIC = 'html/body/div[4]/div[4]/div[1]/div[5]/div[2]/dl' // 交通情况
     public static final String X_M_SURROUNDING = 'html/body/div[4]/div[4]/div[1]/div[6]/div[2]/dl'  // 周边信息
+    /** 搜房二手房租赁 **/
+    public static final String X_OH_RENT_PRICE = 'html/body/div[1]/dl'  // 租金信息
 
 }

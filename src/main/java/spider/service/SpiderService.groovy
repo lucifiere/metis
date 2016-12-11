@@ -1,7 +1,9 @@
 package spider.service
 
 import spider.constant.Pattern
+import spider.pageprocessor.SouFangNewHouseProcessor
 import spider.pageprocessor.SouFangOldHouseProcessor
+import spider.pipeline.ExcelPipeline
 import us.codecraft.webmagic.Page
 
 /**
@@ -10,10 +12,11 @@ import us.codecraft.webmagic.Page
 class SpiderService {
 
     public static void crawl() {
-//        SouFangNewHouseProcessor souFangPageProcessor = new SouFangNewHouseProcessor('新房', Pattern.O_TIANJIN_ORIGIN)
-//        souFangPageProcessor.start(souFangPageProcessor)
         SouFangOldHouseProcessor souFangNewHouseProcessor = new SouFangOldHouseProcessor('旧房', Pattern.O_TIANJIN_OH_ORIGIN)
         souFangNewHouseProcessor.start(souFangNewHouseProcessor);
+        ExcelPipeline.combine()
+//        SouFangNewHouseProcessor souFangPageProcessor = new SouFangNewHouseProcessor('新房', Pattern.O_TIANJIN_ORIGIN)
+//        souFangPageProcessor.start(souFangPageProcessor)
     }
 
     public static int getPostCode(String name) {
@@ -114,6 +117,7 @@ class SpiderService {
         }
         for (String origin in origins) {
             if (!origin) continue
+            matchStreet(page, origin)
             match(page, origin, '小区地址', 'addr')
             match(page, origin, '所属区域', 'distr')
             match(page, origin, '环线位置', 'loopP')
@@ -166,71 +170,6 @@ class SpiderService {
             match(page, origin, ['公交', '公共交通'], 'bus')
             match(page, origin, '其他', 'env')
             match(page, origin, '小区内部配套', 'other')
-
-//            def m0 = java.util.regex.Pattern.compile('小区地址\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m0.find()) page.putField('address', m0.group())
-//            def m1 = java.util.regex.Pattern.compile('所属区域\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m1.find()) page.putField('district', m1.group())
-//            def m2 = java.util.regex.Pattern.compile('邮    编\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m2.find()) page.putField('zip', m2.group())
-//            def m3 = java.util.regex.Pattern.compile('产权描述\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m3.find()) page.putField('pDes', m3.group())
-//            def m4 = java.util.regex.Pattern.compile('物业类别\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m4.find()) page.putField('pCategory', m4.group())
-//            def m5 = java.util.regex.Pattern.compile('竣工时间\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m5.find()) page.putField('completeT', m5.group())
-//            def m6 = java.util.regex.Pattern.compile('开 发 商\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m6.find()) page.putField('deve', m6.group())
-//            def m7 = java.util.regex.Pattern.compile('建筑类别\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m7.find()) page.putField('bCategory', m7.group())
-//            def m8 = java.util.regex.Pattern.compile('建筑面积\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m8.find()) page.putField('cArea', m8.group())
-//            def m9 = java.util.regex.Pattern.compile('占地面积\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m9.find()) page.putField('space', m9.group())
-//            def m10 = java.util.regex.Pattern.compile('当前户数\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m10.find()) page.putField('rNum', m10.group())
-//            def m11 = java.util.regex.Pattern.compile('总 户 数\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m11.find()) page.putField('arNum', m11.group())
-//            def m12 = java.util.regex.Pattern.compile('容 积 率\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m12.find()) page.putField('pRation', m12.group())
-//            def m13 = java.util.regex.Pattern.compile('物 业 费\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m13.find()) page.putField('pFee', m13.group())
-//            def m14 = java.util.regex.Pattern.compile('绿 化 率\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m14.find()) page.putField('green', m14.group())
-//            def m15 = java.util.regex.Pattern.compile('附加信息\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m15.find()) page.putField('additional', m15.group())
-//            def m16 = java.util.regex.Pattern.compile('燃    气\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m16.find()) page.putField('gas', m16.group())
-//            def m17 = java.util.regex.Pattern.compile('供    水\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m17.find()) page.putField('water', m17.group())
-//            def m18 = java.util.regex.Pattern.compile('供    暖\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m18.find()) page.putField('warm', m18.group())
-//            def m19 = java.util.regex.Pattern.compile('供    电\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m19.find()) page.putField('elec', m19.group())
-//            def m20 = java.util.regex.Pattern.compile('通讯设备\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m20.find()) page.putField('commun', m20.group())
-//            def m21 = java.util.regex.Pattern.compile('卫生服务\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m21.find()) page.putField('hygi', m21.group())
-//            def m22 = java.util.regex.Pattern.compile('小区入口\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m22.find()) page.putField('entry', m22.group())
-//            def m23 = java.util.regex.Pattern.compile('小区简介\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m23.find()) page.putField('intro', m23.group())
-//            def m24 = java.util.regex.Pattern.compile('本月走势\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m24.find()) page.putField('tend', m24.group())
-//            def m25 = java.util.regex.Pattern.compile('项目特色\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m25.find()) page.putField('feature', m25.group())
-//            def m26 = java.util.regex.Pattern.compile('物业办公电话\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m26.find()) page.putField('tel', m26.group())
-//            def m27 = java.util.regex.Pattern.compile('建筑结构\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m27.find()) page.putField('structure', m27.group())
-//            def m28 = java.util.regex.Pattern.compile('物业办公地点\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m28.find()) page.putField('office', m28.group())
-//            def m29 = java.util.regex.Pattern.compile('别名\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m29.find()) page.putField('oName', m29.group())
-//            def m30 = java.util.regex.Pattern.compile('出租本月均价\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m30.find()) page.putField('rentP', m30.group())
-//            def m31 = java.util.regex.Pattern.compile('出租本月走势\\s{0,5}：\\s{0,5}.*?\\s').matcher(origin)
-//            while (m31.find()) page.putField('rentT', m31.group())
         }
     }
 
@@ -249,6 +188,17 @@ class SpiderService {
         }
         if (tmp != '')
             page.putField(key, tmp)
+    }
+
+    private static void matchStreet(Page page, String origin) {
+        String tmp = ''
+        def m = java.util.regex.Pattern.compile("所属区域\\s{0,5}：\\s{0,5}.*?\\s{0,2}.*\\s").matcher(origin)
+        while (m.find()) tmp = m.group()?.replaceAll("所属区域\\s{0,5}：\\s{0,5}", '')
+        if (tmp != '') {
+            String[] street = tmp.split(' ')
+            if (street.size() > 1)
+                page.putField('street', street[1])
+        }
     }
 
 }
