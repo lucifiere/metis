@@ -93,34 +93,40 @@ class SpiderService {
             def m = java.util.regex.Pattern.compile(it).matcher(traffic)
             while (m.find()) bus += m.group() + ';'
         }
-        page.putField('capt', capital)
-        page.putField('kin', kindergarten)
-        page.putField('school', school)
-        page.putField('college', college)
-        page.putField('mall', mall)
-        page.putField('post', post)
-        page.putField('bank', bank)
-        page.putField('res', restaurant)
-        page.putField('subWay', subWay)
-        page.putField('bus', bus)
-        page.putField('other', matingClean)
-        page.putField('env', trafficClean)
+        if (capital != '') page.putField('capt', capital)
+        if (kindergarten != '') page.putField('kin', kindergarten)
+        if (school != '') page.putField('school', school)
+        if (college != '') page.putField('college', college)
+        if (mall != '') page.putField('mall', mall)
+        if (post != '') page.putField('post', post)
+        if (bank != '') page.putField('bank', bank)
+        if (restaurant != '') page.putField('res', restaurant)
+        if (subWay != '') page.putField('subWay', subWay)
+        if (bus != '') page.putField('bus', bus)
+        if (matingClean != '') page.putField('other', matingClean)
+        if (trafficClean != '') page.putField('env', trafficClean)
     }
 
     public static void analysisInfoWithFormat(Page page, List origins) {
         for (String origin in origins) {
             if (!origin) continue
+            analysisInfoWithoutFormat(page, origin, origin)
+        }
+        for (String origin in origins) {
+            if (!origin) continue
             match(page, origin, '小区地址', 'addr')
             match(page, origin, '所属区域', 'distr')
+            match(page, origin, '环线位置', 'loopP')
+            match(page, origin, '竣工时间', 'compT')
             match(page, origin, '邮    编', 'zip')
-            match(page, origin, '产权描述', 'pDes')
+            match(page, origin, '产权描述', 'propL')
             match(page, origin, '物业类别', 'propC')
             match(page, origin, '竣工时间', 'compT')
             match(page, origin, '开 发 商', 'deve')
             match(page, origin, '建筑类别', 'builC')
             match(page, origin, '建筑面积', 'coveA')
             match(page, origin, '占地面积', 'flooB')
-            match(page, origin, '当前户数', 'curR')
+            match(page, origin, '当期户数', 'curR')
             match(page, origin, '总 户 数', 'allR')
             match(page, origin, '容 积 率', 'plotR')
             match(page, origin, '物 业 费', 'propF')
@@ -130,7 +136,7 @@ class SpiderService {
             match(page, origin, '供    水', 'water')
             match(page, origin, '供    暖', 'warm')
             match(page, origin, '供    电', 'elec')
-            match(page, origin, '安全管理', 'elec')
+            match(page, origin, '安全管理', 'safe')
             match(page, origin, '社区布局方式', 'layout')
             match(page, origin, '小区简介', 'courI')
             match(page, origin, '项目特色', 'projF')
@@ -145,6 +151,9 @@ class SpiderService {
             match(page, origin, '出租本月均价', 'rentP')
             match(page, origin, '出租本月走势', 'rentT')
             match(page, origin, '停车位', 'parkA')
+            match(page, origin, '建筑高度', 'builH')
+            match(page, origin, '楼栋数', 'builNu')
+            match(page, origin, '建筑结构形式', 'saleTy')
             match(page, origin, ['医院'], 'capt')
             match(page, origin, ['幼儿园'], 'kin')
             match(page, origin, ['中小学'], 'school')
@@ -235,14 +244,11 @@ class SpiderService {
         for (String s : items) {
             def m = java.util.regex.Pattern.compile("${s}\\s{0,5}：\\s{0,5}.*?\\s").matcher(origin)
             while (m.find()) {
-                tmp += m.group() + ';'
+                tmp += m.group()?.replaceAll("${s}\\s{0,5}：\\s{0,5}", '') + ';'
             }
-            tmp?.replaceAll("${s}\\s{0,5}：\\s{0,5}", '')
         }
-        if(tmp == ''){
-            analysisInfoWithoutFormat(page, origin, origin)
-        }
-        page.putField(key, tmp)
+        if (tmp != '')
+            page.putField(key, tmp)
     }
 
 }

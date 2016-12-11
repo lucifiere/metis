@@ -78,9 +78,10 @@ class Pattern {
     public static final String X_OH_MONTH_PRICE = 'html/body/div[4]/div[4]/div[1]/div[1]/dl[1]/dd/span'  // 本月均价
     public static final String X_OH_VIA_BEFORE_M = 'html/body/div[4]/div[4]/div[1]/div[1]/dl[2]/dd/span'  // 环比上月
     public static final String X_OH_VIA_BEFORE_Y = 'html/body/div[4]/div[4]/div[1]/div[1]/dl[3]/dd/span'  // 同比上年
+    public static final String X_OH_OTHER_NAME = 'html/body/div[4]/div[2]/div[2]/h1/span/span'  // 别名
+    public static final String X_OH_DISTRICT = 'html/body/div[4]/div[4]/div[1]/div[2]/div[2]/dl/dd[3]'  // 所属区域
     public static final String X_OH_ADDRESS = 'html/body/div[4]/div[4]/div[1]/div[2]/div[2]/dl/dd[1]'  // 小区地址
     public static final String X_OH_PROJECT_FEATURE = 'html/body/div[4]/div[4]/div[1]/div[2]/div[2]/dl/dd[2]'  // 项目特色
-    public static final String X_OH_DISTRICT = 'html/body/div[4]/div[4]/div[1]/div[2]/div[2]/dl/dd[3]'  // 所属区域
     public static final String X_OH_ZIP_CODE = 'html/body/div[4]/div[4]/div[1]/div[2]/div[2]/dl/dd[4]'  // 邮编
     public static final String X_OH_LOOP_POSITION = 'html/body/div[4]/div[4]/div[1]/div[2]/div[2]/dl/dd[5]'  // 环线位置
     public static final String X_OH_PROPERTY_DES = 'html/body/div[4]/div[4]/div[1]/div[2]/div[2]/dl/dd[6]'  // 产权描述
@@ -109,8 +110,8 @@ class Pattern {
     public static final String X_OH_MATING = 'html/body/div[4]/div[4]/div[1]/div[5]/div[2]/dl/dt[9]'  // 配套
     public static final String X_M_BASE_INFO = 'html/body/div[4]/div[4]/div[1]/div[2]/div[2]/dl'  // 基本信息
     public static final String X_M_MATING_INFO = 'html/body/div[4]/div[4]/div[1]/div[3]/div[2]/dl'  // 配套信息
-    public static final String X_M_COURT_INTRODUCE = 'html/body/div[4]/div[4]/div[1]/div[4]'  // 小区介绍
+    public static final String X_M_COURT_INTRODUCE = 'html/body/div[4]/div[4]/div[1]/div[4]/dl'  // 小区介绍
     public static final String X_M_TRAFFIC = 'html/body/div[4]/div[4]/div[1]/div[5]/div[2]/dl' // 交通情况
-    public static final String X_M_SURROUNDING = 'html/body/div[4]/div[4]/div[1]/div[6]/div[2]'  // 周边信息
+    public static final String X_M_SURROUNDING = 'html/body/div[4]/div[4]/div[1]/div[6]/div[2]/dl'  // 周边信息
 
 }

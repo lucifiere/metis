@@ -56,17 +56,24 @@ class SouFangOldHouseProcessor extends BasePageProcessor implements PageProcesso
     }
 
     private static void crawlPageInfo(Page page) {
-        page.putField('buliN', cleanVaule(page.getHtml().xpath(Pattern.X_OH_BUILDING_NAME).get()))
+        page.putField('buliN', cleanValue(page.getHtml().xpath(Pattern.X_OH_BUILDING_NAME).get()))
+        page.putField('pric', cleanValue(page.getHtml().xpath(Pattern.X_OH_MONTH_PRICE).get()))
+        page.putField('viaM', cleanValue(page.getHtml().xpath(Pattern.X_OH_VIA_BEFORE_M).get()))
+        page.putField('viaY', cleanValue(page.getHtml().xpath(Pattern.X_OH_VIA_BEFORE_Y).get()))
+        page.putField('oName', cleanValue(page.getHtml().xpath(Pattern.X_OH_OTHER_NAME).get()))
+        String[] street = cleanValue(page.getHtml().xpath(Pattern.X_OH_DISTRICT).get())?.split(' ')
+        if (street != null && street.size() > 1) page.putField('street', street[1])
+
         page.putField('origin', Pattern.ORIGIN_OLD)
-        String baseInfo = cleanVaule(page.getHtml().xpath(Pattern.X_M_BASE_INFO).get())
+        String baseInfo = cleanValue(page.getHtml().xpath(Pattern.X_M_BASE_INFO).get())
         page.putField("baseInfo", baseInfo)
-        String courtIntroduce = cleanVaule(page.getHtml().xpath(Pattern.X_M_COURT_INTRODUCE).get())
+        String courtIntroduce = cleanValue(page.getHtml().xpath(Pattern.X_M_COURT_INTRODUCE).get())
         page.putField("courtIntroduce", courtIntroduce)
-        String matingInfo = cleanVaule(page.getHtml().xpath(Pattern.X_M_MATING_INFO).get())
+        String matingInfo = cleanValue(page.getHtml().xpath(Pattern.X_M_MATING_INFO).get())
         page.putField("matingInfo", matingInfo)
-        String surrounding = cleanVaule(page.getHtml().xpath(Pattern.X_M_SURROUNDING).get())
+        String surrounding = cleanValue(page.getHtml().xpath(Pattern.X_M_SURROUNDING).get())
         page.putField("surrounding", surrounding)
-        String traffic = cleanVaule(page.getHtml().xpath(Pattern.X_M_TRAFFIC).get())
+        String traffic = cleanValue(page.getHtml().xpath(Pattern.X_M_TRAFFIC).get())
         page.putField("traffic", traffic)
         SpiderService.analysisInfoWithFormat(page, [baseInfo, courtIntroduce, matingInfo, surrounding, traffic])
     }
@@ -82,7 +89,7 @@ class SouFangOldHouseProcessor extends BasePageProcessor implements PageProcesso
     }
 
     // 去除HTML换行不闭合标签、HTML普通标签、HTML占位符
-    private static String cleanVaule(String info) {
+    private static String cleanValue(String info) {
         info?.replaceAll("<*?\\n", '')?.replaceAll('<.*?>', " ")?.
                 replaceAll("&nbsp;", ' ')?.
                 replaceAll("&gt;", '')?.

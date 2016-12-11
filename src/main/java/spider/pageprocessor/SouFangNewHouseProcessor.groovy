@@ -79,7 +79,7 @@ class SouFangNewHouseProcessor extends BasePageProcessor implements PageProcesso
         page.putField('tranT', clearValue(page.getHtml().xpath(Pattern.X_TRANSFER_TIME)))
         page.putField('saleA', clearValue(page.getHtml().xpath(Pattern.X_SALE_ADDRESS)))
         page.putField('saleS', clearValue(page.getHtml().xpath(Pattern.X_SALE_STATUS)))
-        page.putField('saleTe', clearValue(page.getHtml().xpath(Pattern.X_SALE_TEL)))
+        page.putField('tel', clearValue(page.getHtml().xpath(Pattern.X_SALE_TEL)))
         page.putField('saleTy', clearValue(page.getHtml().xpath(Pattern.X_SALE_TYPE)))
         page.putField('green', clearValue(page.getHtml().xpath(Pattern.X_GREEN)))
         page.putField('builNu', clearValue(page.getHtml().xpath(Pattern.X_BUILDING_NUM)))
