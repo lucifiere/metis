@@ -23,7 +23,7 @@ class AlertBox {
         window.setMinWidth(350)
         window.setMinHeight(170)
 
-        Button button = new Button("关闭提示")
+        Button button = new Button("关闭")
         button.setOnAction(new EventHandler<ActionEvent>() {
             void handle(ActionEvent event) {
                 window.close()

@@ -4,6 +4,7 @@ import spider.constant.Pattern
 import spider.pageprocessor.SouFangNewHouseProcessor
 import spider.pageprocessor.SouFangOldHouseProcessor
 import spider.pipeline.ExcelPipeline
+import spider.ui.PanelView
 import us.codecraft.webmagic.Page
 
 /**
@@ -12,10 +13,22 @@ import us.codecraft.webmagic.Page
 class SpiderService {
 
     public static void crawl() {
-        SouFangOldHouseProcessor souFangNewHouseProcessor = new SouFangOldHouseProcessor('旧房', Pattern.O_TIANJIN_OH_ORIGIN)
+        String startUrl, ohStartUrl
+        if (PanelView.currentDistrictListenerIndex == 2) {
+            startUrl = Pattern.O_WUHAN_ORIGIN
+            ohStartUrl = Pattern.O_WUHAN_OH_ORIGIN
+        } else if (PanelView.currentDistrictListenerIndex == 1) {
+            startUrl = Pattern.O_CHENGDU_ORIGIN
+            ohStartUrl = Pattern.O_CHENGDU_OH_ORIGIN
+        } else {
+            startUrl = Pattern.O_TIANJIN_ORIGIN
+            ohStartUrl = Pattern.O_TIANJIN_OH_ORIGIN
+        }
+
+        SouFangOldHouseProcessor souFangNewHouseProcessor = new SouFangOldHouseProcessor('旧房', ohStartUrl)
         souFangNewHouseProcessor.start(souFangNewHouseProcessor);
         ExcelPipeline.combine()
-//        SouFangNewHouseProcessor souFangPageProcessor = new SouFangNewHouseProcessor('新房', Pattern.O_TIANJIN_ORIGIN)
+//        SouFangNewHouseProcessor souFangPageProcessor = new SouFangNewHouseProcessor('新房', startUrl)
 //        souFangPageProcessor.start(souFangPageProcessor)
     }
 
@@ -157,7 +170,7 @@ class SpiderService {
             match(page, origin, '停车位', 'parkA')
             match(page, origin, '建筑高度', 'builH')
             match(page, origin, '楼栋数', 'builNu')
-            match(page, origin, '建筑结构形式', 'saleTy')
+            match(page, origin, '建筑结构', 'saleTy')
             match(page, origin, ['医院'], 'capt')
             match(page, origin, ['幼儿园'], 'kin')
             match(page, origin, ['中小学'], 'school')

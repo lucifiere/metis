@@ -98,8 +98,10 @@ class Pattern {
     /** 起始位置 **/
     public static final String O_TIANJIN_ORIGIN = 'http://newhouse.tj.fang.com/house/s/b91/'  // 天津房源列表
     public static final String O_TIANJIN_OH_ORIGIN = 'http://esf.tj.fang.com/housing/__0_0_0_0_1_0_0/'  // 天津老房子列表
-    public static final String C_CHENGDU_ORIGIN = 'http://newhouse.cd.fang.com/house/s/b91/'  // 成都房源列表
-    public static final String C_WUHAN_ORIGIN = 'http://newhouse.wuhan.fang.com/house/s/b91/'  // 武汉房源列表
+    public static final String O_CHENGDU_ORIGIN = 'http://newhouse.cd.fang.com/house/s/b91/'  // 成都房源列表
+    public static final String O_CHENGDU_OH_ORIGIN = 'http://esf.cd.fang.com/housing/__0_0_0_0_1_0_0/'  // 成都老房子列表
+    public static final String O_WUHAN_ORIGIN = 'http://newhouse.wuhan.fang.com/house/s/b91/'  // 武汉房源列表
+    public static final String O_WUHAN_OH_ORIGIN = 'http://esf.wuhan.fang.com/housing/__0_0_0_0_1_0_0/'  // 武汉老房子列表
     /** 搜房网二手房 **/
     public static final String X_OH_BUILDING_NAME = 'html/body/div[4]/div[2]/div[2]/h1/a'  // 楼盘名称/社区名称
     public static final String X_OH_MONTH_PRICE = 'html/body/div[4]/div[4]/div[1]/div[1]/dl[1]/dd/span'  // 本月均价

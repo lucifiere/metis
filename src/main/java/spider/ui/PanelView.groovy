@@ -1,6 +1,7 @@
 package spider.ui
 
 import javafx.application.Application
+import javafx.application.Platform
 import javafx.beans.value.ChangeListener
 import javafx.beans.value.ObservableValue
 import javafx.collections.FXCollections
@@ -33,17 +34,16 @@ class PanelView extends Application {
     public static Condition condition = Condition.getCondition()
     public static boolean crawling = false
     public static Thread crawlingThread = null
+    public static int currentDistrictListenerIndex = 0
 
     void start(Stage primaryStage) throws Exception {
         // 1. 搜索过滤设置
         Label tip = new Label('欢迎使用房产爬虫')
-        def cityLabel = new Label('城市')
-        def city = new ChoiceBox(FXCollections.observableArrayList(
-                '天津',
-                '成都',
-                '武汉')
-        )
-        def districtLabel = new Label('城区')
+
+        TianjinSelectEvent tjListener = new TianjinSelectEvent()
+        ChengduSelectEvent cdListener = new ChengduSelectEvent()
+        WuhanSelectEvent whListener = new WuhanSelectEvent()
+
         def district = new ChoiceBox(FXCollections.observableArrayList(
                 '全部',
                 '河北',
@@ -64,7 +64,95 @@ class PanelView extends Application {
                 '武清',
                 '其他')
         )
-        district.getSelectionModel().selectedIndexProperty().addListener(new TianjinSelectEvent())
+        district.getSelectionModel().selectedIndexProperty().addListener(tjListener)
+        def cityLabel = new Label('城市')
+        def city = new ChoiceBox(FXCollections.observableArrayList(
+                '天津',
+                '成都',
+                '武汉')
+        )
+        city.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            void changed(ObservableValue<? extends Number> observableValue, Number s, Number t1) {
+                switch (t1) {
+                    case 0:
+                        condition.setCity(Pattern.TIAN_JIN);
+                        district.setItems(FXCollections.observableArrayList(
+                                '全部',
+                                '河北',
+                                '河西',
+                                '和平',
+                                '南开',
+                                '河东',
+                                '东丽',
+                                '北辰',
+                                '西青',
+                                '津南',
+                                '滨海新区',
+                                '红桥',
+                                '宝坻',
+                                '蓟州',
+                                '宁河',
+                                '静海',
+                                '武清',
+                                '其他')
+                        )
+                        if(currentDistrictListenerIndex == 0) district.getSelectionModel().selectedIndexProperty().removeListener(tjListener)
+                        if(currentDistrictListenerIndex == 1) district.getSelectionModel().selectedIndexProperty().removeListener(cdListener)
+                        if(currentDistrictListenerIndex == 2) district.getSelectionModel().selectedIndexProperty().removeListener(whListener)
+                        district.getSelectionModel().selectedIndexProperty().addListener(tjListener)
+                        currentDistrictListenerIndex = 0
+                        break
+                    case 1:
+                        condition.setCity(Pattern.CHENG_DU);
+                        district.setItems(FXCollections.observableArrayList(
+                                '全部',
+                                '成华',
+                                '锦江',
+                                '金牛',
+                                '龙泉驿',
+                                '其他',
+                                '青白江',
+                                '新都',
+                                '青羊',
+                                '武侯',
+                                '温江',
+                                '双流')
+                        )
+                        if(currentDistrictListenerIndex == 0) district.getSelectionModel().selectedIndexProperty().removeListener(tjListener)
+                        if(currentDistrictListenerIndex == 1) district.getSelectionModel().selectedIndexProperty().removeListener(cdListener)
+                        if(currentDistrictListenerIndex == 2) district.getSelectionModel().selectedIndexProperty().removeListener(whListener)
+                        district.getSelectionModel().selectedIndexProperty().addListener(cdListener)
+                        currentDistrictListenerIndex = 1
+                        break
+                    case 2:
+                        condition.setCity(Pattern.WU_HAN);
+                        district.setItems(FXCollections.observableArrayList(
+                                '全部',
+                                '蔡甸',
+                                '东西湖',
+                                '汉南',
+                                '汉阳',
+                                '洪山',
+                                '黄陂',
+                                '江岸',
+                                '江汉',
+                                '江夏',
+                                '其他',
+                                '硚口',
+                                '青山',
+                                '武昌',)
+                        )
+                        if(currentDistrictListenerIndex == 0) district.getSelectionModel().selectedIndexProperty().removeListener(tjListener)
+                        if(currentDistrictListenerIndex == 1) district.getSelectionModel().selectedIndexProperty().removeListener(cdListener)
+                        if(currentDistrictListenerIndex == 2) district.getSelectionModel().selectedIndexProperty().removeListener(whListener)
+                        district.getSelectionModel().selectedIndexProperty().addListener(whListener)
+                        currentDistrictListenerIndex = 2
+                        break
+                }
+            }
+        })
+        def districtLabel = new Label('城区')
         def filterBoxPanel = new HBox()
         filterBoxPanel.setSpacing(15)
         filterBoxPanel.getChildren().addAll(cityLabel, city, districtLabel, district)
@@ -82,6 +170,7 @@ class PanelView extends Application {
                         s.crawl()
                         crawling = false
                     }
+                    new AlertBox().display("消息！", "爬虫执行完毕！")
                 } else {
                     String info = '\t爬虫正在工作中，请等待本次任务结束后再启动下次任务！'
                     new AlertBox().display("请等待！", info)
@@ -216,5 +305,4 @@ class PanelView extends Application {
             }
         }
     }
-
 }
