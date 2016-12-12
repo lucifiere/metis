@@ -14,7 +14,6 @@ class Config {
     public static final String AN_JU_KE = '安居客'
     public static final String ZHONG_YUAN = '中原地产'
     public static final String LIAN_JIA = '链家网'
-    private static final Logger log = LoggerFactory.getLogger(Config.class)
     public static
     final String AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31'
 
@@ -27,6 +26,8 @@ class Config {
     private int timeout = 3 * 60 * 1000 // 超时时间
     private String path = 'D:\\spider\\'
     private String excelName = '房产信息'
+
+//    private static final Logger log = LoggerFactory.getLogger(Config.class)
 
     public static Config getConfig() {
         try {
@@ -47,7 +48,7 @@ class Config {
                 c
             }
         } catch (Exception ex) {
-            log.error("配置加载失败，将使用默认配置：", ex)
+//            log.error("配置加载失败，将使用默认配置：", ex)
             c = new Config()
             c
         }

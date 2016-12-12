@@ -28,8 +28,8 @@ class SpiderService {
         SouFangOldHouseProcessor souFangNewHouseProcessor = new SouFangOldHouseProcessor('旧房', ohStartUrl)
         souFangNewHouseProcessor.start(souFangNewHouseProcessor);
         ExcelPipeline.combine()
-//        SouFangNewHouseProcessor souFangPageProcessor = new SouFangNewHouseProcessor('新房', startUrl)
-//        souFangPageProcessor.start(souFangPageProcessor)
+        SouFangNewHouseProcessor souFangPageProcessor = new SouFangNewHouseProcessor('新房', startUrl)
+        souFangPageProcessor.start(souFangPageProcessor)
     }
 
     public static int getPostCode(String name) {
@@ -155,7 +155,6 @@ class SpiderService {
             match(page, origin, '供    电', 'elec')
             match(page, origin, '安全管理', 'safe')
             match(page, origin, '社区布局方式', 'layout')
-            match(page, origin, '小区简介', 'courI')
             match(page, origin, '项目特色', 'projF')
             match(page, origin, '物业办公电话', 'tel')
             match(page, origin, '通讯设备', 'commu')

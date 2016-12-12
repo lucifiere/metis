@@ -25,7 +25,7 @@ class SouFangOldHouseProcessor extends SouFangBasePageProcessor implements PageP
             .setUserAgent(Config.AGENT)
             .setCharset('GBK')
 
-    private final def Logger log = LoggerFactory.getLogger(SouFangOldHouseProcessor.class)
+//    private final def Logger log = LoggerFactory.getLogger(SouFangOldHouseProcessor.class)
     private Condition condition = Condition.getCondition()
     private static RentInfo rentInfo = RentInfo.getRentInfo()
 
@@ -36,15 +36,15 @@ class SouFangOldHouseProcessor extends SouFangBasePageProcessor implements PageP
     @Override
     void process(Page page) {
         String url = page.getUrl()
-        log.info('开始抓取：' + url)
+//        log.info('开始抓取：' + url)
         crawlPageInfo(page)
         if (isSkip(page)) page.setSkip(true)
-        log.info('结束抓取：' + url)
+//        log.info('结束抓取：' + url)
 
         List courtFetchList = page.getHtml().xpath('//a[@class=\'plotTit\']').links().all()
         List detailFetchList = page.getHtml().xpath('//ul[@class=\'nav clearfix\']/li[2]').links().all()
         List rentFetchList = page.getHtml().xpath('//ul[@class=\'nav clearfix\']/li[4]').links().all()
-//        String frameUrl = page.getHtml().xpath('//div[@class=\'trendIframe2\']/iframe/@src').get()
+        String frameUrl = page.getHtml().xpath('//div[@class=\'trendIframe2\']/iframe/@src').get()
         Set unfilteredSet = []
         unfilteredSet.addAll(courtFetchList)
         unfilteredSet.addAll(detailFetchList)
@@ -56,24 +56,27 @@ class SouFangOldHouseProcessor extends SouFangBasePageProcessor implements PageP
             filteredList << "http://esf.${condition.getCity()}.fang.com/housing/${condition.getDistrict()}__0_0_0_0_${it + 1}_0_0/".toString()
         }
 
-//        filteredList << frameUrl
+        filteredList << frameUrl
         page.addTargetRequests(filteredList)
-        log.info(filteredList.toString())
+//        log.info(filteredList.toString())
     }
 
     private static void crawlPageInfo(Page page) {
-        String buildingName = cleanValue(page.getHtml().xpath(Pattern.X_OH_BUILDING_NAME).get())?.replaceAll('网', '')
-        String rentPrice = page.getHtml().xpath(Pattern.X_OH_RENT_PRICE).get()
-        if(rentPrice != null && rentPrice != ''){
-            rentInfo.rentPage.put(buildingName, rentPrice)
+        String rentPrice = cleanValue(page.getHtml().xpath(Pattern.X_OH_RENT_PRICE).get())
+        if (rentPrice != null && rentPrice != '') {
+            String code4RentPrice = page.getUrl().regex('newcode=.*').get()?.replaceAll('newcode=', '')
+            rentInfo.rentPage.put(code4RentPrice, rentPrice)
             return
         }
 
-        page.putField('builN', buildingName)
+        def code = page.getHtml().xpath('//ul[@class=\'nav clearfix\']/li[3]').links().regex('photo/.*').get()?.replaceAll('\\.htm', '')?.replaceAll('photo/', '')
+        page.putField('code', code)
+        page.putField('builN', cleanValue(page.getHtml().xpath(Pattern.X_OH_BUILDING_NAME).get())?.replaceAll('网', ''))
         page.putField('pric', cleanValue(page.getHtml().xpath(Pattern.X_OH_MONTH_PRICE).get()))
         page.putField('viaM', cleanValue(page.getHtml().xpath(Pattern.X_OH_VIA_BEFORE_M).get()))
         page.putField('viaY', cleanValue(page.getHtml().xpath(Pattern.X_OH_VIA_BEFORE_Y).get()))
         page.putField('oName', cleanValue(page.getHtml().xpath(Pattern.X_OH_OTHER_NAME).get()))
+        page.putField('courI',cleanValue(page.getHtml().xpath('//div[@id=\'jjShow\']').get()))
 
         page.putField('origin', Pattern.ORIGIN_OLD)
         String baseInfo = cleanValue(page.getHtml().xpath(Pattern.X_M_BASE_INFO).get())

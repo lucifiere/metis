@@ -1,8 +1,4 @@
 package spider.constant
-
-import org.apache.poi.hssf.usermodel.HSSFSheet
-import us.codecraft.webmagic.Site
-
 /**
  *  Created by Tyler.Wang on 2016/12/11.
  */

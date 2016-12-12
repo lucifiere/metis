@@ -170,7 +170,6 @@ class PanelView extends Application {
                         s.crawl()
                         crawling = false
                     }
-                    new AlertBox().display("消息！", "爬虫执行完毕！")
                 } else {
                     String info = '\t爬虫正在工作中，请等待本次任务结束后再启动下次任务！'
                     new AlertBox().display("请等待！", info)
