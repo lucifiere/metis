@@ -4,7 +4,6 @@ import spider.constant.Pattern
 import spider.pageprocessor.SouFangNewHouseProcessor
 import spider.pageprocessor.SouFangOldHouseProcessor
 import spider.pipeline.ExcelPipeline
-import spider.ui.PanelView
 import us.codecraft.webmagic.Page
 
 /**
@@ -13,23 +12,12 @@ import us.codecraft.webmagic.Page
 class SpiderService {
 
     public static void crawl() {
-        String startUrl, ohStartUrl
-        if (PanelView.currentDistrictListenerIndex == 2) {
-            startUrl = Pattern.O_WUHAN_ORIGIN
-            ohStartUrl = Pattern.O_WUHAN_OH_ORIGIN
-        } else if (PanelView.currentDistrictListenerIndex == 1) {
-            startUrl = Pattern.O_CHENGDU_ORIGIN
-            ohStartUrl = Pattern.O_CHENGDU_OH_ORIGIN
-        } else {
-            startUrl = Pattern.O_TIANJIN_ORIGIN
-            ohStartUrl = Pattern.O_TIANJIN_OH_ORIGIN
-        }
-
-        SouFangOldHouseProcessor souFangNewHouseProcessor = new SouFangOldHouseProcessor('旧房', ohStartUrl)
+        SouFangOldHouseProcessor souFangNewHouseProcessor = new SouFangOldHouseProcessor('旧房', 'http://www.baidu.com')
         souFangNewHouseProcessor.start(souFangNewHouseProcessor);
         ExcelPipeline.combine()
-        SouFangNewHouseProcessor souFangPageProcessor = new SouFangNewHouseProcessor('新房', startUrl)
+        SouFangNewHouseProcessor souFangPageProcessor = new SouFangNewHouseProcessor('新房', 'http://www.baidu.com')
         souFangPageProcessor.start(souFangPageProcessor)
+        System.out.print("爬行结束")
     }
 
     public static int getPostCode(String name) {
@@ -50,8 +38,75 @@ class SpiderService {
             case '蓟州': return 301900
             case '宁河': return 301500
             case '静海': return 301600
+            //
             case '武清': return 301700
-            default: return 300000
+            case '青羊': return 610031
+            case '锦江': return 610011
+            case '武侯': return 610041
+            case '成华': return 610066
+            case '金牛': return 610036
+            case '高新区': return 610041
+            case '高新西区': return 611730
+            case '郫县': return 611730
+            case '龙泉驿': return 610100
+            case '新都': return 610500
+            case '温江': return 611130
+            case '都江堰市': return 611830
+            case '青白江': return 610300
+            case '金堂县': return 610400
+            case '崇州市': return 611230
+            case '邛崃市': return 611530
+            case '浦江县': return 611630
+            case '双流': return 610200
+            case '天府新区': return 610000
+            //
+            case '江干': return 310002
+            case '拱墅': return 310011
+            case '下沙': return 310018
+            case '西湖': return 310013
+            case '下城': return 310006
+            case '滨江': return 310051
+            case '之江': return 310013
+            case '上城': return 311500
+            case '余杭': return 311300
+            case '萧山': return 311201
+            case '富阳': return 311400
+            case '桐庐': return 311500
+            case '临安': return 311300
+            case '淳安': return 311700
+            case '建德': return 311600
+            //
+            case '龙岗': return 518100
+            case '龙华新区': return 518109
+            case '宝安': return 518100
+            case '南山': return 518000
+            case '福田': return 518000
+            case '罗湖': return 518000
+            case '坪山新区': return 518118
+            case '光明新区': return 518107
+            case '盐田': return 518000
+            case '大鹏新区': return 518108
+            case '东莞': return 523000
+            case '惠州': return 516000
+            case '中山': return 528400
+            case '珠海': return 519000
+            //
+            case '东湖高新区': return 430079
+            case '江岸区': return 430014
+            case '洪山区': return 430070
+            case '东西湖区': return 430040
+            case '汉阳区': return 430050
+            case '武昌区': return 430000
+            case '汉江区': return 430000
+            case '经济开发区': return 430056
+            case '硚口区': return 430000
+            case '黄陂区': return 432200
+            case '江夏区': return 430200
+            case '青山区': return 430080
+            case '蔡甸区': return 430100
+            case '新洲区': return 431400
+            case '汉南区': return 430090
+            default: return 000000
         }
     }
 

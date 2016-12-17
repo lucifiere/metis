@@ -25,7 +25,7 @@ class SouFangOldHouseProcessor extends SouFangBasePageProcessor implements PageP
             .setUserAgent(Config.AGENT)
             .setCharset('GBK')
 
-//    private final def Logger log = LoggerFactory.getLogger(SouFangOldHouseProcessor.class)
+    private final def Logger log = LoggerFactory.getLogger(SouFangOldHouseProcessor.class)
     private Condition condition = Condition.getCondition()
     private static RentInfo rentInfo = RentInfo.getRentInfo()
 
@@ -36,10 +36,10 @@ class SouFangOldHouseProcessor extends SouFangBasePageProcessor implements PageP
     @Override
     void process(Page page) {
         String url = page.getUrl()
-//        log.info('开始抓取：' + url)
+        log.info('开始抓取：' + url)
         crawlPageInfo(page)
         if (isSkip(page)) page.setSkip(true)
-//        log.info('结束抓取：' + url)
+        log.info('结束抓取：' + url)
 
         List courtFetchList = page.getHtml().xpath('//a[@class=\'plotTit\']').links().all()
         List detailFetchList = page.getHtml().xpath('//ul[@class=\'nav clearfix\']/li[2]').links().all()
@@ -53,7 +53,7 @@ class SouFangOldHouseProcessor extends SouFangBasePageProcessor implements PageP
         List filteredList = []
         filteredList.addAll(unfilteredSet)
         1.times {
-            filteredList << "http://esf.${condition.getCity()}.fang.com/housing/${condition.getDistrict()}__0_0_0_0_${it + 1}_0_0/".toString()
+            filteredList << "http://esf.${condition.getCity()}.fang.com/housing/${condition.getOhDistrict()}__0_0_0_0_${it + 1}_0_0/".toString()
         }
 
         filteredList << frameUrl
@@ -62,7 +62,7 @@ class SouFangOldHouseProcessor extends SouFangBasePageProcessor implements PageP
     }
 
     private static void crawlPageInfo(Page page) {
-        String rentPrice = cleanValue(page.getHtml().xpath(Pattern.X_OH_RENT_PRICE).get())
+        String rentPrice = cleanValue(page.getHtml().xpath(Pattern.X_OH_RENT_PRICE).get())?.trim()
         if (rentPrice != null && rentPrice != '') {
             String code4RentPrice = page.getUrl().regex('newcode=.*').get()?.replaceAll('newcode=', '')
             rentInfo.rentPage.put(code4RentPrice, rentPrice)
@@ -76,7 +76,7 @@ class SouFangOldHouseProcessor extends SouFangBasePageProcessor implements PageP
         page.putField('viaM', cleanValue(page.getHtml().xpath(Pattern.X_OH_VIA_BEFORE_M).get()))
         page.putField('viaY', cleanValue(page.getHtml().xpath(Pattern.X_OH_VIA_BEFORE_Y).get()))
         page.putField('oName', cleanValue(page.getHtml().xpath(Pattern.X_OH_OTHER_NAME).get()))
-        page.putField('courI',cleanValue(page.getHtml().xpath('//div[@id=\'jjShow\']').get()))
+        page.putField('courI', cleanValue(page.getHtml().xpath('//div[@id=\'jjShow\']').get()))
 
         page.putField('origin', Pattern.ORIGIN_OLD)
         String baseInfo = cleanValue(page.getHtml().xpath(Pattern.X_M_BASE_INFO).get())

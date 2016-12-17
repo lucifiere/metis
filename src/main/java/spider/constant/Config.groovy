@@ -23,7 +23,7 @@ class Config {
     private int wait4Next = 2000   // 抓取频率
     private int threadCount = 3   // 抓取线程数
     private int predictPageNum = 100000 // 预估页面数
-    private int timeout = 3 * 60 * 1000 // 超时时间
+    private int timeout = 3 * 1000 // 超时时间
     private String path = 'D:\\spider\\'
     private String excelName = '房产信息'
 
@@ -47,7 +47,7 @@ class Config {
             } else {
                 c
             }
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
 //            log.error("配置加载失败，将使用默认配置：", ex)
             c = new Config()
             c

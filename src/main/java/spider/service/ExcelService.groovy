@@ -46,7 +46,7 @@ class ExcelService {
         sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 3, 29))
         sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 30, 41))
         sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 42, 49))
-        sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 50, 62))
+        sheet.addMergedRegion(new CellRangeAddress(row4Merge, row4Merge, 50, 66))
 
         List detailDes = ['社区名称', '楼盘名称', '别名', '所属辖区', '所属街道', '环线位置', '地址',
                           '邮编', '建筑年代', '均价', '出租均价', '同比去年', '环比上月', '产权描述',
@@ -58,7 +58,7 @@ class ExcelService {
                           '停车位', '幼儿园', '中小学', '大学',
                           '商场', '医院', '邮局', '银行', '其他', '公交', '地铁', '教育',
                           '医疗', '餐饮', '购物', '环境', '小区内部配套', '小区简介',
-                          '装修情况', '在售状态', '售楼地址', '电话']
+                          '装修情况', '在售状态', '售楼地址', '电话', '一居租金','二居租金','三居租金','单间租金']
 
         i = 0
         detailDes.each {

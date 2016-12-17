@@ -7,6 +7,7 @@ class Condition {
 
     private static Condition c
 
+    private String cityName = '天津'
     private String city = Pattern.TIAN_JIN
     private String district = ''
     private String ohDistrict = ''
@@ -33,6 +34,14 @@ class Condition {
 
     void setOhDistrict(String ohDistrict) {
         this.ohDistrict = ohDistrict
+    }
+
+    String getCityName() {
+        return cityName
+    }
+
+    void setCityName(String cityName) {
+        this.cityName = cityName
     }
 
     private Condition() {}

@@ -11,10 +11,21 @@ class Pattern {
     public static final String R_BLANK = '\\s{1,5}'
     public static final int ORIGIN_NEW = 0
     public static final int ORIGIN_OLD = 1
+
     /** 城市 **/
     public static final String TIAN_JIN = 'tj'
     public static final String CHENG_DU = 'cd'
     public static final String WU_HAN = 'wuhan'
+    public static final String SHEN_ZHEN = 'sz'
+    public static final String HANG_ZHOU = 'hz'
+
+    /** 城市 **/
+    public static final String CNAME_TIAN_JIN = '天津'
+    public static final String CNAME_CHENG_DU = '成都'
+    public static final String CNAME_WU_HAN = '武汉'
+    public static final String CNAME_SHEN_ZHEN = '深圳'
+    public static final String CNAME_HANG_ZHOU = '杭州'
+
     /** 天津城区 **/
     public static final String ALL = ''
     public static final String TJ_HE_PING = 'heping/'
@@ -61,6 +72,37 @@ class Pattern {
     public static final String WH_HUANG_PI = 'huangpi2/'
     public static final String WH_OTHER = 'qita/'
 
+    /** 杭州城区 **/
+    public static final String HZ_GONG_SHU = 'gongshu/'
+    public static final String HZ_JIANG_GAN = 'jianggan/'
+    public static final String HZ_XI_HU = 'xihu/'
+    public static final String HZ_XIA_SHA = 'xiasha/'
+    public static final String HZ_XIA_CHENG = 'xiacheng/'
+    public static final String HZ_BIN_JIANG = 'binjiang/'
+    public static final String HZ_ZHI_JIANG = 'zhijiang/'
+    public static final String HZ_SHANG_CHENG= 'shangcheng/'
+    public static final String HZ_YU_HANG = 'yuhang/'
+    public static final String HZ_XIAO_SHAN = 'xiaoshan/'
+    public static final String HZ_FU_YANG = 'fuyang/'
+    public static final String HZ_TONG_LU = 'tonglu/'
+    public static final String HZ_LIN_AN= 'linan/'
+    public static final String HZ_CHUN_AN = 'chunan/'
+    public static final String HZ_JIAN_DE = 'jiande/'
+    public static final String HZ_OTHER = 'qita/'
+
+    /** 深圳城区 **/
+    public static final String SZ_LONG_GANG ='longgang/'
+    public static final String SZ_LONG_HUAXINQU = 'longhuaxinqu/'
+    public static final String SZ_BAO_AN= 'baoan/'
+    public static final String SZ_NAN_SHAN = 'nanshan/'
+    public static final String SZ_FU_TIAN = 'futian/'
+    public static final String SZ_LUO_HU = 'luohu/'
+    public static final String SZ_PING_SHANXINQU = 'pingshanxinqu/'
+    public static final String SZ_GUANG_MINGXINQU= 'guangmingxinqu/'
+    public static final String SZ_YAN_TIAN = 'yantian/'
+    public static final String SZ_DA_PENGXINQU = 'dapengxinqu/'
+    public static final String SZ_OTHER = 'qita/'
+
     /** 搜房网新房 **/
     public static final String R_COURT_DETAIL = '.*\\.fang\\.com/house/\\d+/housedetail.htm'  // 小区信息地址
     public static final String X_BUILDING_NAME = 'html/body/div[4]/div/div[1]/dl/dd/div[1]/h1/a'  // 楼盘名称/社区名称
@@ -95,6 +137,7 @@ class Pattern {
     public static final String X_BUILDING_HIGH = 'html/body/div[8]/div/div[1]/div[4]/ul/li[10]/div[2]'  // 建筑高度
     public static
     final String X_PROJECT_FEATURE = 'html/body/div[8]/div/div[1]/div[1]/ul/li[2]/div[2]/span[@class=\'tag\']'  // 特色
+
     /** 起始位置 **/
     public static final String O_TIANJIN_ORIGIN = 'http://newhouse.tj.fang.com/house/s/b91/'  // 天津房源列表
     public static final String O_TIANJIN_OH_ORIGIN = 'http://esf.tj.fang.com/housing/__0_0_0_0_1_0_0/'  // 天津老房子列表
@@ -102,13 +145,13 @@ class Pattern {
     public static final String O_CHENGDU_OH_ORIGIN = 'http://esf.cd.fang.com/housing/__0_0_0_0_1_0_0/'  // 成都老房子列表
     public static final String O_WUHAN_ORIGIN = 'http://newhouse.wuhan.fang.com/house/s/b91/'  // 武汉房源列表
     public static final String O_WUHAN_OH_ORIGIN = 'http://esf.wuhan.fang.com/housing/__0_0_0_0_1_0_0/'  // 武汉老房子列表
+
     /** 搜房网二手房 **/
     public static final String X_OH_BUILDING_NAME = 'html/body/div[4]/div[2]/div[2]/h1/a'  // 楼盘名称/社区名称
     public static final String X_OH_MONTH_PRICE = 'html/body/div[4]/div[4]/div[1]/div[1]/dl[1]/dd/span'  // 本月均价
     public static final String X_OH_VIA_BEFORE_M = 'html/body/div[4]/div[4]/div[1]/div[1]/dl[2]/dd/span'  // 环比上月
     public static final String X_OH_VIA_BEFORE_Y = 'html/body/div[4]/div[4]/div[1]/div[1]/dl[3]/dd/span'  // 同比上年
     public static final String X_OH_OTHER_NAME = 'html/body/div[4]/div[2]/div[2]/h1/span/span'  // 别名
-//
     public static final String X_OH_DISTRICT = 'html/body/div[4]/div[4]/div[1]/div[2]/div[2]/dl/dd[3]'  // 所属区域
     public static final String X_OH_ADDRESS = 'html/body/div[4]/div[4]/div[1]/div[2]/div[2]/dl/dd[1]'  // 小区地址
     public static final String X_OH_PROJECT_FEATURE = 'html/body/div[4]/div[4]/div[1]/div[2]/div[2]/dl/dd[2]'  // 项目特色
@@ -143,6 +186,7 @@ class Pattern {
     public static final String X_M_COURT_INTRODUCE = 'html/body/div[4]/div[4]/div[1]/div[4]/dl'  // 小区介绍
     public static final String X_M_TRAFFIC = 'html/body/div[4]/div[4]/div[1]/div[5]/div[2]/dl' // 交通情况
     public static final String X_M_SURROUNDING = 'html/body/div[4]/div[4]/div[1]/div[6]/div[2]/dl'  // 周边信息
+
     /** 搜房二手房租赁 **/
     public static final String X_OH_RENT_PRICE = 'html/body/div[1]/dl'  // 租金信息
 
