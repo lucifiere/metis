@@ -73,21 +73,16 @@ class SpiderService {
             case '双流': return 610200
             case '天府新区': return 610000
         //
-            case '江干': return 310002
-            case '拱墅': return 310011
-            case '下沙': return 310018
-            case '西湖': return 310013
-            case '下城': return 310006
-            case '滨江': return 310051
-            case '之江': return 310013
-            case '上城': return 311500
-            case '余杭': return 311300
-            case '萧山': return 311201
-            case '富阳': return 311400
-            case '桐庐': return 311500
-            case '临安': return 311300
-            case '淳安': return 311700
-            case '建德': return 311600
+            case '渝中': return 400010
+            case '江北': return 400020
+            case '渝北': return 401147
+            case '南岸': return 400060
+            case '沙坪坝': return 400030
+            case '九龙坡': return 400050
+            case '巴南': return 401320
+            case '大渡口': return 400080
+            case '北碚': return 400700
+            case '重庆郊县': return 404100
         //
             case '龙岗': return 518100
             case '龙华新区': return 518109
@@ -120,6 +115,22 @@ class SpiderService {
             case '新洲区': return 431400
             case '汉南区': return 430090
             default: return 000000
+            //
+            case '江干': return 310002
+            case '拱墅': return 310011
+            case '下沙': return 310018
+            case '西湖': return 310013
+            case '下城': return 310006
+            case '滨江': return 310051
+            case '之江': return 310013
+            case '上城': return 311500
+            case '余杭': return 311300
+            case '萧山': return 311201
+            case '富阳': return 311400
+            case '桐庐': return 311500
+            case '临安': return 311300
+            case '淳安': return 311700
+            case '建德': return 311600
         }
     }
 
@@ -199,6 +210,7 @@ class SpiderService {
         for (String origin in origins) {
             if (!origin) continue
             matchStreet(page, origin)
+            matchBuilding(page, origin)
             match(page, origin, '小区地址', 'addr')
             match(page, origin, '所属区域', 'distr')
             match(page, origin, '环线位置', 'loopP')
@@ -208,7 +220,6 @@ class SpiderService {
             match(page, origin, '物业类别', 'propC')
             match(page, origin, '竣工时间', 'compT')
             match(page, origin, '开 发 商', 'deve')
-            matchBuilding(page, origin)
             match(page, origin, '建筑面积', 'coveA')
             match(page, origin, '占地面积', 'flooB')
             match(page, origin, '当期户数', 'curR')

@@ -45,6 +45,8 @@ class PanelView extends Application {
         WuhanSelectEvent whListener = new WuhanSelectEvent()
         HangZhouSelectEvent hzListener = new HangZhouSelectEvent()
         ShenZhenSelectEvent szListener = new ShenZhenSelectEvent()
+        ChongQingSelectEvent cqListener = new ChongQingSelectEvent()
+
 
         def district = new ChoiceBox(FXCollections.observableArrayList(
                 '全部',
@@ -73,7 +75,8 @@ class PanelView extends Application {
                 '成都',
                 '武汉',
                 '杭州',
-                '深圳')
+                '深圳',
+                '重庆')
         )
         city.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -107,6 +110,7 @@ class PanelView extends Application {
                         if (currentDistrictListenerIndex == 2) district.getSelectionModel().selectedIndexProperty().removeListener(whListener)
                         if (currentDistrictListenerIndex == 3) district.getSelectionModel().selectedIndexProperty().removeListener(hzListener)
                         if (currentDistrictListenerIndex == 4) district.getSelectionModel().selectedIndexProperty().removeListener(szListener)
+                        if (currentDistrictListenerIndex == 5) district.getSelectionModel().selectedIndexProperty().removeListener(cqListener)
                         district.getSelectionModel().selectedIndexProperty().addListener(tjListener)
                         currentDistrictListenerIndex = 0
                         break
@@ -132,6 +136,7 @@ class PanelView extends Application {
                         if (currentDistrictListenerIndex == 2) district.getSelectionModel().selectedIndexProperty().removeListener(whListener)
                         if (currentDistrictListenerIndex == 3) district.getSelectionModel().selectedIndexProperty().removeListener(hzListener)
                         if (currentDistrictListenerIndex == 4) district.getSelectionModel().selectedIndexProperty().removeListener(szListener)
+                        if (currentDistrictListenerIndex == 5) district.getSelectionModel().selectedIndexProperty().removeListener(cqListener)
                         district.getSelectionModel().selectedIndexProperty().addListener(cdListener)
                         currentDistrictListenerIndex = 1
                         break
@@ -159,6 +164,7 @@ class PanelView extends Application {
                         if (currentDistrictListenerIndex == 2) district.getSelectionModel().selectedIndexProperty().removeListener(whListener)
                         if (currentDistrictListenerIndex == 3) district.getSelectionModel().selectedIndexProperty().removeListener(hzListener)
                         if (currentDistrictListenerIndex == 4) district.getSelectionModel().selectedIndexProperty().removeListener(szListener)
+                        if (currentDistrictListenerIndex == 5) district.getSelectionModel().selectedIndexProperty().removeListener(cqListener)
                         district.getSelectionModel().selectedIndexProperty().addListener(whListener)
                         currentDistrictListenerIndex = 2
                         break
@@ -190,6 +196,7 @@ class PanelView extends Application {
                         if (currentDistrictListenerIndex == 2) district.getSelectionModel().selectedIndexProperty().removeListener(whListener)
                         if (currentDistrictListenerIndex == 3) district.getSelectionModel().selectedIndexProperty().removeListener(hzListener)
                         if (currentDistrictListenerIndex == 4) district.getSelectionModel().selectedIndexProperty().removeListener(szListener)
+                        if (currentDistrictListenerIndex == 5) district.getSelectionModel().selectedIndexProperty().removeListener(cqListener)
                         district.getSelectionModel().selectedIndexProperty().addListener(hzListener)
                         currentDistrictListenerIndex = 3
                         break
@@ -216,8 +223,36 @@ class PanelView extends Application {
                         if (currentDistrictListenerIndex == 3) district.getSelectionModel().selectedIndexProperty().removeListener(hzListener)
                         if (currentDistrictListenerIndex == 4) district.getSelectionModel().selectedIndexProperty().removeListener(szListener)
                         if (currentDistrictListenerIndex == 2) district.getSelectionModel().selectedIndexProperty().removeListener(whListener)
+                        if (currentDistrictListenerIndex == 5) district.getSelectionModel().selectedIndexProperty().removeListener(cqListener)
                         district.getSelectionModel().selectedIndexProperty().addListener(szListener)
                         currentDistrictListenerIndex = 4
+                        break
+
+                    case 5:
+                        condition.setCity(Pattern.CHONG_QING)
+                        condition.setCityName(Pattern.CNAME_CHONG_QING)
+                        district.setItems(FXCollections.observableArrayList(
+                                '全部',
+                                '渝中',
+                                '江北',
+                                '渝北',
+                                '南岸',
+                                '沙坪坝',
+                                '九龙坡',
+                                '巴南',
+                                '大渡口',
+                                '北碚',
+                                '其他',
+                                )
+                        )
+                        if (currentDistrictListenerIndex == 0) district.getSelectionModel().selectedIndexProperty().removeListener(tjListener)
+                        if (currentDistrictListenerIndex == 1) district.getSelectionModel().selectedIndexProperty().removeListener(cdListener)
+                        if (currentDistrictListenerIndex == 2) district.getSelectionModel().selectedIndexProperty().removeListener(whListener)
+                        if (currentDistrictListenerIndex == 3) district.getSelectionModel().selectedIndexProperty().removeListener(hzListener)
+                        if (currentDistrictListenerIndex == 4) district.getSelectionModel().selectedIndexProperty().removeListener(szListener)
+                        if (currentDistrictListenerIndex == 5) district.getSelectionModel().selectedIndexProperty().removeListener(cqListener)
+                        district.getSelectionModel().selectedIndexProperty().addListener(cqListener)
+                        currentDistrictListenerIndex = 0
                         break
                 }
             }
@@ -413,6 +448,25 @@ class PanelView extends Application {
                 case 9: condition.setDistrict(Pattern.SZ_YAN_TIAN); condition.setOhDistrict('88'); break
                 case 10: condition.setDistrict(Pattern.SZ_DA_PENGXINQU); condition.setOhDistrict('13082'); break
                 case 11: condition.setDistrict(Pattern.SZ_OTHER); condition.setOhDistrict(''); break
+            }
+        }
+    }
+
+    class ChongQingSelectEvent implements ChangeListener<Number> {
+        @Override
+        void changed(ObservableValue<? extends Number> observableValue, Number s, Number t1) {
+            switch (t1) {
+                case 0: condition.setDistrict(Pattern.ALL); condition.setOhDistrict(''); break
+                case 1: condition.setDistrict(Pattern.CQ_YU_ZHONG); condition.setOhDistrict('56'); break
+                case 2: condition.setDistrict(Pattern.CQ_JIANG_BEI); condition.setOhDistrict('57'); break
+                case 3: condition.setDistrict(Pattern.CQ_YU_BEI); condition.setOhDistrict('58'); break
+                case 4: condition.setDistrict(Pattern.CQ_NAN_AN); condition.setOhDistrict('59'); break
+                case 5: condition.setDistrict(Pattern.CQ_SHA_PINGBA); condition.setOhDistrict('60'); break
+                case 6: condition.setDistrict(Pattern.CQ_JIU_LONGPO); condition.setOhDistrict('61'); break
+                case 7: condition.setDistrict(Pattern.CQ_BA_NAN); condition.setOhDistrict('64'); break
+                case 8: condition.setDistrict(Pattern.CQ_DA_DUKOU); condition.setOhDistrict('62'); break
+                case 9: condition.setDistrict(Pattern.CQ_BEI_BEI); condition.setOhDistrict('63'); break
+                case 10: condition.setDistrict(Pattern.CQ_OTHER); condition.setOhDistrict('13195'); break
             }
         }
     }

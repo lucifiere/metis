@@ -18,6 +18,8 @@ class Pattern {
     public static final String WU_HAN = 'wuhan'
     public static final String SHEN_ZHEN = 'sz'
     public static final String HANG_ZHOU = 'hz'
+    public static final String CHONG_QING = 'cq'
+
 
     /** 城市 **/
     public static final String CNAME_TIAN_JIN = '天津'
@@ -25,6 +27,7 @@ class Pattern {
     public static final String CNAME_WU_HAN = '武汉'
     public static final String CNAME_SHEN_ZHEN = '深圳'
     public static final String CNAME_HANG_ZHOU = '杭州'
+    public static final String CNAME_CHONG_QING = '重庆'
 
     /** 天津城区 **/
     public static final String ALL = ''
@@ -89,6 +92,19 @@ class Pattern {
     public static final String HZ_CHUN_AN = 'chunan/'
     public static final String HZ_JIAN_DE = 'jiande/'
     public static final String HZ_OTHER = 'qita/'
+
+    /** 重庆城区 **/
+    public static final String CQ_YU_ZHONG = 'yuzhong/'
+    public static final String CQ_JIANG_BEI = 'jingbei/'
+    public static final String CQ_YU_BEI= 'yubei/'
+    public static final String CQ_NAN_AN = 'nanan/'
+    public static final String CQ_SHA_PINGBA = 'shapingba/'
+    public static final String CQ_JIU_LONGPO = 'jiulongpo/'
+    public static final String CQ_BA_NAN = 'banan/'
+    public static final String CQ_DA_DUKOU= 'dadukou/'
+    public static final String CQ_BEI_BEI = 'beibei/'
+    public static final String CQ_OTHER = 'qita/'
+    //public static final String CQ_CEHNG_QINGJIAOXIAN= 'chongqingjiaoxian/'
 
     /** 深圳城区 **/
     public static final String SZ_LONG_GANG ='longgang/'
