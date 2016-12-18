@@ -52,7 +52,7 @@ class SouFangOldHouseProcessor extends SouFangBasePageProcessor implements PageP
 
         List filteredList = []
         filteredList.addAll(unfilteredSet)
-        1.times {
+        100.times {
             filteredList << "http://esf.${condition.getCity()}.fang.com/housing/${condition.getOhDistrict()}__0_0_0_0_${it + 1}_0_0/".toString()
         }
 

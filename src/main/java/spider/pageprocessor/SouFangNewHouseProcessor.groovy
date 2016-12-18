@@ -48,7 +48,7 @@ class SouFangNewHouseProcessor extends SouFangBasePageProcessor implements PageP
 
         List filteredList = []
         filteredList.addAll(unfilteredSet)
-        1.times {
+        100.times {
             filteredList << "http://newhouse.${condition.getCity()}.fang.com/house/s/${condition.getDistrict()}b9${it + 1}/".toString()
         }
 

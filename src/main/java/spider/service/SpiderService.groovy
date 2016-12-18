@@ -31,6 +31,7 @@ class SpiderService {
         while (m3.find()) return '1'
         def m4 = java.util.regex.Pattern.compile("企业").matcher(p)
         while (m4.find()) return '2'
+        return ''
     }
 
     public static int getPostCode(String name) {
