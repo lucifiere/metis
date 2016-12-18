@@ -17,7 +17,20 @@ class SpiderService {
         ExcelPipeline.combine()
         SouFangNewHouseProcessor souFangPageProcessor = new SouFangNewHouseProcessor('新房', 'http://www.baidu.com')
         souFangPageProcessor.start(souFangPageProcessor)
-        System.out.print("爬行结束")
+        System.out.print("---------------------------爬行结束---------------------------")
+    }
+
+    public static String getPropertyRight(String p) {
+        def m = java.util.regex.Pattern.compile("40").matcher(p)
+        while (m.find()) return '3'
+        def m1 = java.util.regex.Pattern.compile("50").matcher(p)
+        while (m1.find()) return '4'
+        def m2 = java.util.regex.Pattern.compile("70").matcher(p)
+        while (m2.find()) return '6'
+        def m3 = java.util.regex.Pattern.compile("公产").matcher(p)
+        while (m3.find()) return '1'
+        def m4 = java.util.regex.Pattern.compile("企业").matcher(p)
+        while (m4.find()) return '2'
     }
 
     public static int getPostCode(String name) {
@@ -38,7 +51,7 @@ class SpiderService {
             case '蓟州': return 301900
             case '宁河': return 301500
             case '静海': return 301600
-            //
+        //
             case '武清': return 301700
             case '青羊': return 610031
             case '锦江': return 610011
@@ -59,7 +72,7 @@ class SpiderService {
             case '浦江县': return 611630
             case '双流': return 610200
             case '天府新区': return 610000
-            //
+        //
             case '江干': return 310002
             case '拱墅': return 310011
             case '下沙': return 310018
@@ -75,7 +88,7 @@ class SpiderService {
             case '临安': return 311300
             case '淳安': return 311700
             case '建德': return 311600
-            //
+        //
             case '龙岗': return 518100
             case '龙华新区': return 518109
             case '宝安': return 518100
@@ -90,7 +103,7 @@ class SpiderService {
             case '惠州': return 516000
             case '中山': return 528400
             case '珠海': return 519000
-            //
+        //
             case '东湖高新区': return 430079
             case '江岸区': return 430014
             case '洪山区': return 430070
@@ -195,7 +208,7 @@ class SpiderService {
             match(page, origin, '物业类别', 'propC')
             match(page, origin, '竣工时间', 'compT')
             match(page, origin, '开 发 商', 'deve')
-            match(page, origin, '建筑类别', 'builC')
+            matchBuilding(page, origin)
             match(page, origin, '建筑面积', 'coveA')
             match(page, origin, '占地面积', 'flooB')
             match(page, origin, '当期户数', 'curR')
@@ -211,6 +224,7 @@ class SpiderService {
             match(page, origin, '安全管理', 'safe')
             match(page, origin, '社区布局方式', 'layout')
             match(page, origin, '项目特色', 'projF')
+            match(page, origin, '楼栋总数', 'builNu')
             match(page, origin, '物业办公电话', 'tel')
             match(page, origin, '通讯设备', 'commu')
             match(page, origin, '卫生服务', 'hegi')
@@ -267,5 +281,25 @@ class SpiderService {
                 page.putField('street', street[1])
         }
     }
+
+    private static void matchBuilding(Page page, String origin) {
+        String tmp = ''
+        def m = java.util.regex.Pattern.compile("建筑类别\\s{0,5}：\\s{0,5}.*?\\s{0,2}.*\\s").matcher(origin)
+        while (m.find()) tmp = m.group()?.replaceAll("建筑类别\\s{0,5}：\\s{0,5}", '')
+        if (tmp != '') {
+            String[] street = tmp.split(' ')
+            if (street.size() == 1) page.putField('buildC', street[0])
+            if (street.size() > 1) {
+                page.putField('builC', street[0])
+                String height = ''
+                for (int i = 1; i < street.size(); i++) {
+                    if (street[i] == "") break
+                    height += street[i] + ' '
+                }
+                page.putField('builH', street[1])
+            }
+        }
+    }
+
 
 }

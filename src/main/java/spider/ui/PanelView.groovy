@@ -4,6 +4,7 @@ import javafx.application.Application
 import javafx.beans.value.ChangeListener
 import javafx.beans.value.ObservableValue
 import javafx.collections.FXCollections
+import javafx.concurrent.Task
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.geometry.Pos
@@ -229,16 +230,13 @@ class PanelView extends Application {
         // 2. 操作设置
         def confirm = new Button()
         confirm.setText('启动爬虫')
+        Task<Integer> task
         confirm.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             void handle(ActionEvent event) {
                 if (!crawling) {
-                    crawlingThread = Thread.start {
-                        crawling = true
-                        def s = new SpiderService()
-                        s.crawl()
-                        crawling = false
-                    }
+                    task= new SuccessTask()
+                    crawlingThread = new Thread(task).start()
                 } else {
                     String info = '\t爬虫正在工作中，请等待本次任务结束后再启动下次任务！'
                     new AlertBox().display("请等待！", info)
@@ -378,23 +376,23 @@ class PanelView extends Application {
         @Override
         void changed(ObservableValue<? extends Number> observableValue, Number s, Number t1) {
             switch (t1) {
-               case 0: condition.setDistrict(Pattern.ALL); condition.setOhDistrict(''); break
-               case 1: condition.setDistrict(Pattern.HZ_JIANG_GAN); condition.setOhDistrict('153'); break
-               case 2: condition.setDistrict(Pattern.HZ_GONG_SHU); condition.setOhDistrict('152'); break
-               case 3: condition.setDistrict(Pattern.HZ_XI_HU); condition.setOhDistrict('151'); break
-               case 4: condition.setDistrict(Pattern.HZ_XIA_SHA); condition.setOhDistrict('153_2391'); break
-               case 5: condition.setDistrict(Pattern.HZ_XIA_CHENG); condition.setOhDistrict('150'); break
-               case 6: condition.setDistrict(Pattern.HZ_BIN_JIANG); condition.setOhDistrict('154'); break
-               case 7: condition.setDistrict(Pattern.HZ_ZHI_JIANG); condition.setOhDistrict(''); break
-               case 8: condition.setDistrict(Pattern.HZ_SHANG_CHENG); condition.setOhDistrict('149'); break
-               case 9: condition.setDistrict(Pattern.HZ_YU_HANG); condition.setOhDistrict('155'); break
-               case 10: condition.setDistrict(Pattern.HZ_XIAO_SHAN); condition.setOhDistrict('156'); break
-               case 11: condition.setDistrict(Pattern.HZ_FU_YANG); condition.setOhDistrict('157'); break
-               case 12: condition.setDistrict(Pattern.HZ_TONG_LU); condition.setOhDistrict('158'); break
-               case 13: condition.setDistrict(Pattern.HZ_LIN_AN); condition.setOhDistrict('159'); break
-               case 14: condition.setDistrict(Pattern.HZ_CHUN_AN); condition.setOhDistrict('160'); break
-               case 15: condition.setDistrict(Pattern.HZ_JIAN_DE); condition.setOhDistrict('161'); break
-               case 16: condition.setDistrict(Pattern.HZ_OTHER); condition.setOhDistrict(''); break
+                case 0: condition.setDistrict(Pattern.ALL); condition.setOhDistrict(''); break
+                case 1: condition.setDistrict(Pattern.HZ_JIANG_GAN); condition.setOhDistrict('153'); break
+                case 2: condition.setDistrict(Pattern.HZ_GONG_SHU); condition.setOhDistrict('152'); break
+                case 3: condition.setDistrict(Pattern.HZ_XI_HU); condition.setOhDistrict('151'); break
+                case 4: condition.setDistrict(Pattern.HZ_XIA_SHA); condition.setOhDistrict('153_2391'); break
+                case 5: condition.setDistrict(Pattern.HZ_XIA_CHENG); condition.setOhDistrict('150'); break
+                case 6: condition.setDistrict(Pattern.HZ_BIN_JIANG); condition.setOhDistrict('154'); break
+                case 7: condition.setDistrict(Pattern.HZ_ZHI_JIANG); condition.setOhDistrict(''); break
+                case 8: condition.setDistrict(Pattern.HZ_SHANG_CHENG); condition.setOhDistrict('149'); break
+                case 9: condition.setDistrict(Pattern.HZ_YU_HANG); condition.setOhDistrict('155'); break
+                case 10: condition.setDistrict(Pattern.HZ_XIAO_SHAN); condition.setOhDistrict('156'); break
+                case 11: condition.setDistrict(Pattern.HZ_FU_YANG); condition.setOhDistrict('157'); break
+                case 12: condition.setDistrict(Pattern.HZ_TONG_LU); condition.setOhDistrict('158'); break
+                case 13: condition.setDistrict(Pattern.HZ_LIN_AN); condition.setOhDistrict('159'); break
+                case 14: condition.setDistrict(Pattern.HZ_CHUN_AN); condition.setOhDistrict('160'); break
+                case 15: condition.setDistrict(Pattern.HZ_JIAN_DE); condition.setOhDistrict('161'); break
+                case 16: condition.setDistrict(Pattern.HZ_OTHER); condition.setOhDistrict(''); break
             }
         }
     }
@@ -403,21 +401,36 @@ class PanelView extends Application {
         @Override
         void changed(ObservableValue<? extends Number> observableValue, Number s, Number t1) {
             switch (t1) {
-          case 0: condition.setDistrict(Pattern.ALL); condition.setOhDistrict(''); break
-          case 1: condition.setDistrict(Pattern.SZ_LONG_GANG); condition.setOhDistrict('90'); break
-          case 2: condition.setDistrict(Pattern.SZ_LONG_HUAXINQU); condition.setOhDistrict('13080'); break
-          case 3: condition.setDistrict(Pattern.SZ_BAO_AN); condition.setOhDistrict('89'); break
-          case 4: condition.setDistrict(Pattern.SZ_NAN_SHAN); condition.setOhDistrict('87'); break
-          case 5: condition.setDistrict(Pattern.SZ_FU_TIAN); condition.setOhDistrict('85'); break
-          case 6: condition.setDistrict(Pattern.SZ_LUO_HU); condition.setOhDistrict('86'); break
-          case 7: condition.setDistrict(Pattern.SZ_PING_SHANXINQU); condition.setOhDistrict('13081'); break
-          case 8: condition.setDistrict(Pattern.SZ_GUANG_MINGXINQU); condition.setOhDistrict('13079'); break
-          case 9: condition.setDistrict(Pattern.SZ_YAN_TIAN); condition.setOhDistrict('88'); break
-          case 10: condition.setDistrict(Pattern.SZ_DA_PENGXINQU); condition.setOhDistrict('13082'); break
-          case 11: condition.setDistrict(Pattern.SZ_OTHER); condition.setOhDistrict(''); break
-      }
+                case 0: condition.setDistrict(Pattern.ALL); condition.setOhDistrict(''); break
+                case 1: condition.setDistrict(Pattern.SZ_LONG_GANG); condition.setOhDistrict('90'); break
+                case 2: condition.setDistrict(Pattern.SZ_LONG_HUAXINQU); condition.setOhDistrict('13080'); break
+                case 3: condition.setDistrict(Pattern.SZ_BAO_AN); condition.setOhDistrict('89'); break
+                case 4: condition.setDistrict(Pattern.SZ_NAN_SHAN); condition.setOhDistrict('87'); break
+                case 5: condition.setDistrict(Pattern.SZ_FU_TIAN); condition.setOhDistrict('85'); break
+                case 6: condition.setDistrict(Pattern.SZ_LUO_HU); condition.setOhDistrict('86'); break
+                case 7: condition.setDistrict(Pattern.SZ_PING_SHANXINQU); condition.setOhDistrict('13081'); break
+                case 8: condition.setDistrict(Pattern.SZ_GUANG_MINGXINQU); condition.setOhDistrict('13079'); break
+                case 9: condition.setDistrict(Pattern.SZ_YAN_TIAN); condition.setOhDistrict('88'); break
+                case 10: condition.setDistrict(Pattern.SZ_DA_PENGXINQU); condition.setOhDistrict('13082'); break
+                case 11: condition.setDistrict(Pattern.SZ_OTHER); condition.setOhDistrict(''); break
+            }
         }
     }
 
+    public class SuccessTask extends Task<Integer> {
+        @Override
+        protected Integer call() throws Exception {
+            crawling = true
+            def s = new SpiderService()
+            s.crawl()
+            crawling = false
+            return 1
+        }
 
+        @Override
+        protected void succeeded() {
+            super.succeeded();
+            new AlertBox().display("通知", "爬行完毕！")
+        }
+    }
 }

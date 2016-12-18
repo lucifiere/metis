@@ -10,10 +10,6 @@ import org.slf4j.LoggerFactory
 
 class Config {
 
-    public static final String SO_FANG = '搜房网'
-    public static final String AN_JU_KE = '安居客'
-    public static final String ZHONG_YUAN = '中原地产'
-    public static final String LIAN_JIA = '链家网'
     public static
     final String AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31'
 
@@ -22,9 +18,9 @@ class Config {
     private int retryTime = 3 // 重试次数
     private int wait4Next = 2000   // 抓取频率
     private int threadCount = 3   // 抓取线程数
-    private int predictPageNum = 100000 // 预估页面数
-    private int timeout = 3 * 1000 // 超时时间
-    private String path = 'D:\\spider\\'
+    private int predictPageNum = 1000000 // 预估页面数
+    private int timeout = 4 * 1000 // 超时时间
+    private String path = ''
     private String excelName = '房产信息'
 
 //    private static final Logger log = LoggerFactory.getLogger(Config.class)

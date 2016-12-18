@@ -35,10 +35,10 @@ class SouFangNewHouseProcessor extends SouFangBasePageProcessor implements PageP
     @Override
     void process(Page page) {
         String url = page.getUrl()
-        log.info('开始抓取：' + url)
+//        log.info('开始抓取：' + url)
         crawlPageInfo(page)
         if (isSkip(page)) page.setSkip(true)
-        log.info('结束抓取：' + url)
+//        log.info('结束抓取：' + url)
 
         List courtFetchList = page.getHtml().xpath('//div[@class=\'nlcd_name\']').links().all()
         List detailFetchList = page.getHtml().xpath('//div[@class=\'navleft tf\']').links().regex(Pattern.R_COURT_DETAIL).all()

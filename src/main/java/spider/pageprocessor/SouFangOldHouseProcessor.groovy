@@ -36,10 +36,10 @@ class SouFangOldHouseProcessor extends SouFangBasePageProcessor implements PageP
     @Override
     void process(Page page) {
         String url = page.getUrl()
-        log.info('开始抓取：' + url)
+//        log.info('开始抓取：' + url)
         crawlPageInfo(page)
         if (isSkip(page)) page.setSkip(true)
-        log.info('结束抓取：' + url)
+//        log.info('结束抓取：' + url)
 
         List courtFetchList = page.getHtml().xpath('//a[@class=\'plotTit\']').links().all()
         List detailFetchList = page.getHtml().xpath('//ul[@class=\'nav clearfix\']/li[2]').links().all()

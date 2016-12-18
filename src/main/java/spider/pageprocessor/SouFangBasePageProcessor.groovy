@@ -3,7 +3,6 @@ package spider.pageprocessor
 import spider.constant.Config
 import spider.pipeline.ExcelPipeline
 import us.codecraft.webmagic.Spider
-import us.codecraft.webmagic.pipeline.FilePipeline
 import us.codecraft.webmagic.processor.PageProcessor
 import us.codecraft.webmagic.scheduler.QueueScheduler
 import us.codecraft.webmagic.scheduler.component.BloomFilterDuplicateRemover
@@ -21,7 +20,6 @@ abstract class SouFangBasePageProcessor {
         Spider s = Spider.create(p).
                 setScheduler(new QueueScheduler().
                 setDuplicateRemover(new BloomFilterDuplicateRemover(config.getPredictPageNum()))).
-                addPipeline(new FilePipeline(config.getPath())).
                 addPipeline(ExcelPipeline.getExcelPipeline()).
                 addUrl(url).
                 thread(config.getThreadCount())

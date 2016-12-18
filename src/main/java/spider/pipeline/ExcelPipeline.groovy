@@ -26,7 +26,7 @@ class ExcelPipeline implements Pipeline {
     private static volatile int rowCount = 1
     private static ExcelPipeline pipeline
     private static RentInfo rentInfo = RentInfo.getRentInfo()
-    private static String excelName = ''
+    private static String excelName = 'house'
 
     public static ExcelPipeline getExcelPipeline() {
         if (pipeline == null) {
@@ -39,7 +39,7 @@ class ExcelPipeline implements Pipeline {
     void process(ResultItems resultItems, Task task) {
         if (excelName == '') {
             String today = new Date().format('yyyy-MM-dd')
-            if (condition.getDistrict() == '') {
+            if (condition.getDistrict() != '') {
                 excelName = condition.getCityName() + '-' + (resultItems.get('distr') as String)?.replaceAll('楼盘', '') + today
             } else {
                 excelName = condition.getCityName() + '-全部-' + today
@@ -104,6 +104,7 @@ class ExcelPipeline implements Pipeline {
         newRow.getCell(59).setCellValue(resultItems.get('saleS') as String)
         newRow.getCell(60).setCellValue(resultItems.get('saleA') as String)
         newRow.getCell(61).setCellValue(resultItems.get('tel') as String)
+        newRow.getCell(66).setCellValue(SpiderService.getPropertyRight(resultItems.get('propL') as String))
 
         if (origin == Pattern.ORIGIN_OLD) {
             rentInfo.rentExcel.put(newRow.getRowNum(), resultItems.get('code') as String)
@@ -121,7 +122,7 @@ class ExcelPipeline implements Pipeline {
         } else {
             String extraInfo = '开盘时间：' + resultItems.get('saleT')
             String age = '新房，' + resultItems.get('tranT')
-            newRow.getCell(7).setCellValue(SpiderService.getPostCode(resultItems.get('distr') as String))
+            newRow.getCell(7).setCellValue(String.valueOf(SpiderService.getPostCode(resultItems.get('distr') as String)))
             newRow.getCell(8).setCellValue(age)
             newRow.getCell(29).setCellValue(extraInfo)
         }
@@ -131,8 +132,7 @@ class ExcelPipeline implements Pipeline {
     }
 
     static void export() {
-        String path = config.getPath().endsWith('\\') ? config.getPath() + config.getExcelName() + ".xls" :
-                config.getPath() + '\\' + excelName + ".xls"
+        String path = config.getPath() == '' ? config.getPath() + excelName + ".xls" :  config.getPath() + '\\' + excelName + ".xls"
         def os = new FileOutputStream(path)
         excel.write(os)
         os.close()
@@ -143,16 +143,17 @@ class ExcelPipeline implements Pipeline {
         for (int i = 0; i < sheet.getLastRowNum(); i++) {
             String code = RentInfo.rentExcel.get(i)
             String rentPrice = RentInfo.rentPage.get(code)
-            if (rentPrice != null){
+            if (rentPrice != null) {
+                rentPrice = rentPrice.replaceAll("租金指导价：", "")
                 sheet.getRow(i).getCell(10).setCellValue(rentPrice.trim())
                 def m = java.util.regex.Pattern.compile('一居：.*二居').matcher(rentPrice)
-                while (m.find()) sheet.getRow(i).getCell(62).setCellValue(m.group()?.replaceAll('一居：','')?.replaceAll('二居','')?.trim())
+                while (m.find()) sheet.getRow(i).getCell(62).setCellValue(m.group()?.replaceAll('一居：', '')?.replaceAll('二居', '')?.trim())
                 def m2 = java.util.regex.Pattern.compile('二居：.*三居').matcher(rentPrice)
-                while (m2.find()) sheet.getRow(i).getCell(63).setCellValue(m2.group()?.replaceAll('二居：','')?.replaceAll('三居','')?.trim())
+                while (m2.find()) sheet.getRow(i).getCell(63).setCellValue(m2.group()?.replaceAll('二居：', '')?.replaceAll('三居', '')?.trim())
                 def m1 = java.util.regex.Pattern.compile('三居：.*单间').matcher(rentPrice)
-                while (m1.find()) sheet.getRow(i).getCell(64).setCellValue(m1.group()?.replaceAll('三居：','')?.replaceAll('单间','')?.trim())
+                while (m1.find()) sheet.getRow(i).getCell(64).setCellValue(m1.group()?.replaceAll('三居：', '')?.replaceAll('单间', '')?.trim())
                 def m3 = java.util.regex.Pattern.compile('单间：.*').matcher(rentPrice)
-                while (m3.find()) sheet.getRow(i).getCell(64).setCellValue(m3.group()?.replaceAll('单间：','')?.trim())
+                while (m3.find()) sheet.getRow(i).getCell(65).setCellValue(m3.group()?.replaceAll('单间：', '')?.trim())
             }
         }
     }
