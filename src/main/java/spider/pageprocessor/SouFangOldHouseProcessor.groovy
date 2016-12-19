@@ -2,6 +2,7 @@ package spider.pageprocessor
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import spider.constant.BuildingNumberInfo
 import spider.constant.Condition
 import spider.constant.Config
 import spider.constant.Pattern
@@ -28,6 +29,7 @@ class SouFangOldHouseProcessor extends SouFangBasePageProcessor implements PageP
     private final def Logger log = LoggerFactory.getLogger(SouFangOldHouseProcessor.class)
     private Condition condition = Condition.getCondition()
     private static RentInfo rentInfo = RentInfo.getRentInfo()
+    private static BuildingNumberInfo buildingNumberInfo = BuildingNumberInfo.getBuildingNumberInfo()
 
     SouFangOldHouseProcessor(String name, String url) {
         super(name, url)
@@ -69,9 +71,13 @@ class SouFangOldHouseProcessor extends SouFangBasePageProcessor implements PageP
             return
         }
         String buildingName = cleanValue(page.getHtml().xpath(Pattern.X_OH_BUILDING_NAME).get())?.replaceAll('网', '')
-        String buildingNnm = cleanValue(page.getHtml().xpath(Pattern.X_OH_BUILDING_NUM).get())
-        if(buildingNnm.indexOf('栋') != -1){
-
+        String homepageBuildingName = cleanValue(page.getHtml().xpath(Pattern.X_OH_HOMEPAGE_NAME).get())?.replaceAll('网', '')
+        String buildingNum = cleanValue(page.getHtml().xpath(Pattern.X_OH_BUILDING_NUM).get())
+        if(buildingNum){
+            def m = java.util.regex.Pattern.compile('栋').matcher(buildingNum)
+            while (m.find()) {
+                buildingNumberInfo.buildingNumberPage.put(homepageBuildingName, buildingNum)
+            }
         }
 
         def code = page.getHtml().xpath('//ul[@class=\'nav clearfix\']/li[3]').links().regex('photo/.*').get()?.replaceAll('\\.htm', '')?.replaceAll('photo/', '')

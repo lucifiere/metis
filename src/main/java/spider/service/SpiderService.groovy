@@ -249,7 +249,6 @@ class SpiderService {
             match(page, origin, '出租本月走势', 'rentT')
             match(page, origin, '停车位', 'parkA')
             match(page, origin, '建筑高度', 'builH')
-            match(page, origin, '楼栋数', 'builNu')
             match(page, origin, '建筑结构', 'saleTy')
             match(page, origin, ['医院'], 'capt')
             match(page, origin, ['幼儿园'], 'kin')

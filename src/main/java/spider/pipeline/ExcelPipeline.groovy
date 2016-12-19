@@ -3,6 +3,7 @@ package spider.pipeline
 import org.apache.poi.hssf.usermodel.HSSFRow
 import org.apache.poi.hssf.usermodel.HSSFSheet
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
+import spider.constant.BuildingNumberInfo
 import spider.constant.Condition
 import spider.constant.Config
 import spider.constant.Pattern
@@ -26,7 +27,8 @@ class ExcelPipeline implements Pipeline {
     private static volatile int rowCount = 1
     private static ExcelPipeline pipeline
     private static RentInfo rentInfo = RentInfo.getRentInfo()
-    private static String excelName = 'house'
+    private static BuildingNumberInfo buildingNumberInfo = BuildingNumberInfo.getBuildingNumberInfo()
+    private static String excelName = ''
 
     public static ExcelPipeline getExcelPipeline() {
         if (pipeline == null) {
@@ -108,6 +110,7 @@ class ExcelPipeline implements Pipeline {
 
         if (origin == Pattern.ORIGIN_OLD) {
             rentInfo.rentExcel.put(newRow.getRowNum(), resultItems.get('code') as String)
+            buildingNumberInfo.buildingNumberExcel.put(newRow.getRowNum(), resultItems.get('builN') as String)
             newRow.getCell(7).setCellValue(resultItems.get('zip') as String)
             newRow.getCell(8).setCellValue(resultItems.get('compT') as String)
             newRow.getCell(29).setCellValue(resultItems.get('pDes') as String)
@@ -132,7 +135,7 @@ class ExcelPipeline implements Pipeline {
     }
 
     static void export() {
-        String path = config.getPath() == '' ? config.getPath() + excelName + ".xls" :  config.getPath() + '\\' + excelName + ".xls"
+        String path = config.getPath() == '' ? config.getPath() + excelName + ".xls" : config.getPath() + '\\' + excelName + ".xls"
         def os = new FileOutputStream(path)
         excel.write(os)
         os.close()
@@ -140,7 +143,7 @@ class ExcelPipeline implements Pipeline {
 
     public static void combine() {
         HSSFSheet sheet = excel.getSheet('Sheet1')
-        for (int i = 0; i < sheet.getLastRowNum(); i++) {
+        for (int i = 0; i <= sheet.getLastRowNum(); i++) {
             String code = RentInfo.rentExcel.get(i)
             String rentPrice = RentInfo.rentPage.get(code)
             if (rentPrice != null) {
@@ -154,6 +157,13 @@ class ExcelPipeline implements Pipeline {
                 while (m1.find()) sheet.getRow(i).getCell(64).setCellValue(m1.group()?.replaceAll('三居：', '')?.replaceAll('单间', '')?.trim())
                 def m3 = java.util.regex.Pattern.compile('单间：.*').matcher(rentPrice)
                 while (m3.find()) sheet.getRow(i).getCell(65).setCellValue(m3.group()?.replaceAll('单间：', '')?.trim())
+            }
+        }
+        for (int i = 0; i <= sheet.getLastRowNum(); i++) {
+            String code = BuildingNumberInfo.buildingNumberExcel.get(i)
+            String buildingNum = BuildingNumberInfo.buildingNumberPage.get(code)
+            if (buildingNum != null) {
+                sheet.getRow(i).getCell(19).setCellValue(buildingNum.replaceAll('楼栋总数：', ''))
             }
         }
     }

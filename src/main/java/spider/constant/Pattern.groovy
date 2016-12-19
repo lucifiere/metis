@@ -164,6 +164,7 @@ class Pattern {
 
     /** 搜房网二手房 **/
     public static final String X_OH_BUILDING_NAME = 'html/body/div[4]/div[2]/div[2]/h1/a'  // 楼盘名称/社区名称
+    public static final String X_OH_HOMEPAGE_NAME = 'html/body/div[3]/div[2]/div[2]/h1/a'  // 主页 楼盘名称/社区名称
     public static final String X_OH_MONTH_PRICE = 'html/body/div[4]/div[4]/div[1]/div[1]/dl[1]/dd/span'  // 本月均价
     public static final String X_OH_VIA_BEFORE_M = 'html/body/div[4]/div[4]/div[1]/div[1]/dl[2]/dd/span'  // 环比上月
     public static final String X_OH_VIA_BEFORE_Y = 'html/body/div[4]/div[4]/div[1]/div[1]/dl[3]/dd/span'  // 同比上年
