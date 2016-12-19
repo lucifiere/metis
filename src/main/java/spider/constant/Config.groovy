@@ -28,17 +28,17 @@ class Config {
     public static Config getConfig() {
         try {
             if (c == null) {
-                Properties p = new Properties()
-                p.load(new FileInputStream("config.properties"))
                 c = new Config()
-                c.setSpiderName(p.getProperty('spider_name'))
-                c.setRetryTime(p.getProperty('retry_time') as int)
-                c.setWait4Next(p.getProperty('wait_time') as int)
-                c.setThreadCount(p.getProperty('thread') as int)
-                c.setPredictPageNum(p.getProperty('page_num') as int)
-                c.setTimeout(p.getProperty('timeout') as int)
-                c.setPath(p.getProperty('file_path'))
-                c.setExcelName(p.getProperty('excel_name'))
+//                Properties p = new Properties()
+//                p.load(new FileInputStream("config.properties"))
+//                c.setSpiderName(p.getProperty('spider_name'))
+//                c.setRetryTime(p.getProperty('retry_time') as int)
+//                c.setWait4Next(p.getProperty('wait_time') as int)
+//                c.setThreadCount(p.getProperty('thread') as int)
+//                c.setPredictPageNum(p.getProperty('page_num') as int)
+//                c.setTimeout(p.getProperty('timeout') as int)
+//                c.setPath(p.getProperty('file_path'))
+//                c.setExcelName(p.getProperty('excel_name'))
                 return c
             } else {
                 c

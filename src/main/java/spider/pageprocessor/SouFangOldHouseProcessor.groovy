@@ -68,10 +68,15 @@ class SouFangOldHouseProcessor extends SouFangBasePageProcessor implements PageP
             rentInfo.rentPage.put(code4RentPrice, rentPrice)
             return
         }
+        String buildingName = cleanValue(page.getHtml().xpath(Pattern.X_OH_BUILDING_NAME).get())?.replaceAll('网', '')
+        String buildingNnm = cleanValue(page.getHtml().xpath(Pattern.X_OH_BUILDING_NUM).get())
+        if(buildingNnm.indexOf('栋') != -1){
+
+        }
 
         def code = page.getHtml().xpath('//ul[@class=\'nav clearfix\']/li[3]').links().regex('photo/.*').get()?.replaceAll('\\.htm', '')?.replaceAll('photo/', '')
         page.putField('code', code)
-        page.putField('builN', cleanValue(page.getHtml().xpath(Pattern.X_OH_BUILDING_NAME).get())?.replaceAll('网', ''))
+        page.putField('builN', buildingName)
         page.putField('pric', cleanValue(page.getHtml().xpath(Pattern.X_OH_MONTH_PRICE).get()))
         page.putField('viaM', cleanValue(page.getHtml().xpath(Pattern.X_OH_VIA_BEFORE_M).get()))
         page.putField('viaY', cleanValue(page.getHtml().xpath(Pattern.X_OH_VIA_BEFORE_Y).get()))
