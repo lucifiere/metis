@@ -12,8 +12,8 @@ import us.codecraft.webmagic.Page
 class SpiderService {
 
     public static void crawl() {
-        SouFangOldHouseProcessor souFangNewHouseProcessor = new SouFangOldHouseProcessor('旧房', 'http://www.baidu.com')
-        souFangNewHouseProcessor.start(souFangNewHouseProcessor);
+        SouFangOldHouseProcessor souFangOldHouseProcessor = new SouFangOldHouseProcessor('旧房', 'http://www.baidu.com')
+        souFangOldHouseProcessor.start(souFangOldHouseProcessor);
         ExcelPipeline.combine()
         SouFangNewHouseProcessor souFangPageProcessor = new SouFangNewHouseProcessor('新房', 'http://www.baidu.com')
         souFangPageProcessor.start(souFangPageProcessor)
@@ -295,19 +295,21 @@ class SpiderService {
 
     private static void matchBuilding(Page page, String origin) {
         String tmp = ''
+        def builCConstants = ['板楼', '塔楼', '板塔结合']
+        def builHConstants = ['多层', '中高层', '高层', '超高层', '小高层', '中层', '低层']
         def m = java.util.regex.Pattern.compile("建筑类别\\s{0,5}：\\s{0,5}.*?\\s{0,2}.*\\s").matcher(origin)
         while (m.find()) tmp = m.group()?.replaceAll("建筑类别\\s{0,5}：\\s{0,5}", '')
         if (tmp != '') {
             String[] street = tmp.split(' ')
-            if (street.size() == 1) page.putField('buildC', street[0])
-            if (street.size() > 1) {
-                page.putField('builC', street[0])
+            if (street.size() > 0) {
                 String height = ''
-                for (int i = 1; i < street.size(); i++) {
-                    if (street[i] == "") break
-                    height += street[i] + ' '
+                String category = ''
+                for (int i = 0; i < street.size(); i++) {
+                    if (builHConstants.contains(street[i])) height += street[i] + ' '
+                    if (builCConstants.contains(street[i])) category += street[i] + ' '
                 }
-                page.putField('builH', street[1])
+                page.putField('builH', height)
+                page.putField('builC', category)
             }
         }
     }
