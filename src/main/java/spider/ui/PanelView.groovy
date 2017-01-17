@@ -10,6 +10,7 @@ import javafx.event.EventHandler
 import javafx.geometry.Pos
 import javafx.scene.Scene
 import javafx.scene.control.Button
+import javafx.scene.control.CheckBox
 import javafx.scene.control.ChoiceBox
 import javafx.scene.control.Label
 import javafx.scene.layout.BorderPane
@@ -18,9 +19,11 @@ import javafx.scene.layout.VBox
 import javafx.stage.DirectoryChooser
 import javafx.stage.DirectoryChooserBuilder
 import javafx.stage.Stage
+import spider.constant.BuildingNumberInfo
 import spider.constant.Condition
 import spider.constant.Config
 import spider.constant.Pattern
+import spider.constant.RentInfo
 import spider.pipeline.ExcelPipeline
 import spider.service.SpiderService
 
@@ -46,7 +49,6 @@ class PanelView extends Application {
         HangZhouSelectEvent hzListener = new HangZhouSelectEvent()
         ShenZhenSelectEvent szListener = new ShenZhenSelectEvent()
         ChongQingSelectEvent cqListener = new ChongQingSelectEvent()
-
 
         def district = new ChoiceBox(FXCollections.observableArrayList(
                 '全部',
@@ -243,7 +245,7 @@ class PanelView extends Application {
                                 '大渡口',
                                 '北碚',
                                 '其他',
-                                )
+                        )
                         )
                         if (currentDistrictListenerIndex == 0) district.getSelectionModel().selectedIndexProperty().removeListener(tjListener)
                         if (currentDistrictListenerIndex == 1) district.getSelectionModel().selectedIndexProperty().removeListener(cdListener)
@@ -257,10 +259,11 @@ class PanelView extends Application {
                 }
             }
         })
+        def resetExcel = new CheckBox('拼接结果')
         def districtLabel = new Label('城区')
         def filterBoxPanel = new HBox()
         filterBoxPanel.setSpacing(15)
-        filterBoxPanel.getChildren().addAll(cityLabel, city, districtLabel, district)
+        filterBoxPanel.getChildren().addAll(cityLabel, city, districtLabel, district, resetExcel)
         filterBoxPanel.setAlignment(Pos.CENTER)
         // 2. 操作设置
         def confirm = new Button()
@@ -270,7 +273,13 @@ class PanelView extends Application {
             @Override
             void handle(ActionEvent event) {
                 if (!crawling) {
-                    task= new SuccessTask()
+                    ExcelPipeline.resetExcelName()
+                    if (!resetExcel.selected){
+                        ExcelPipeline.resetExcel()
+                        RentInfo.reset()
+                        BuildingNumberInfo.reset()
+                    }
+                    task = new SuccessTask()
                     crawlingThread = new Thread(task).start()
                 } else {
                     String info = '\t爬虫正在工作中，请等待本次任务结束后再启动下次任务！'
@@ -331,7 +340,7 @@ class PanelView extends Application {
         root.setCenter(centerBoxPanel)
 
         primaryStage.setTitle(config.getSpiderName())
-        primaryStage.setScene(new Scene(root, 450, 150))
+        primaryStage.setScene(new Scene(root, 550, 175))
         primaryStage.show()
     }
 
@@ -415,7 +424,7 @@ class PanelView extends Application {
                 case 1: condition.setDistrict(Pattern.HZ_JIANG_GAN); condition.setOhDistrict('153'); break
                 case 2: condition.setDistrict(Pattern.HZ_GONG_SHU); condition.setOhDistrict('152'); break
                 case 3: condition.setDistrict(Pattern.HZ_XI_HU); condition.setOhDistrict('151'); break
-                case 4: condition.setDistrict(Pattern.HZ_XIA_SHA); condition.setOhDistrict('153_2391'); break
+                case 4: condition.setDistrict(Pattern.HZ_XIA_SHA); condition.setOhDistrict('153'); break
                 case 5: condition.setDistrict(Pattern.HZ_XIA_CHENG); condition.setOhDistrict('150'); break
                 case 6: condition.setDistrict(Pattern.HZ_BIN_JIANG); condition.setOhDistrict('154'); break
                 case 7: condition.setDistrict(Pattern.HZ_ZHI_JIANG); condition.setOhDistrict(''); break

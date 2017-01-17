@@ -17,4 +17,9 @@ class RentInfo {
         }
         r
     }
+
+    public static reset(){
+        rentPage = [:]
+        rentExcel = [:]
+    }
 }

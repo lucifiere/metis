@@ -28,7 +28,16 @@ class ExcelPipeline implements Pipeline {
     private static ExcelPipeline pipeline
     private static RentInfo rentInfo = RentInfo.getRentInfo()
     private static BuildingNumberInfo buildingNumberInfo = BuildingNumberInfo.getBuildingNumberInfo()
-    private static String excelName = ''
+    public static String excelName = ''
+
+    public static void resetExcel() {
+        excel = ExcelService.getBlankExcel()
+        rowCount = 1
+    }
+
+    public static void resetExcelName() {
+        excelName = ''
+    }
 
     public static ExcelPipeline getExcelPipeline() {
         if (pipeline == null) {
@@ -142,29 +151,33 @@ class ExcelPipeline implements Pipeline {
     }
 
     public static void combine() {
-        HSSFSheet sheet = excel.getSheet('Sheet1')
-        for (int i = 0; i <= sheet.getLastRowNum(); i++) {
-            String code = RentInfo.rentExcel.get(i)
-            String rentPrice = RentInfo.rentPage.get(code)
-            if (rentPrice != null) {
-                rentPrice = rentPrice.replaceAll("租金指导价：", "")
-                sheet.getRow(i).getCell(10).setCellValue(rentPrice.trim())
-                def m = java.util.regex.Pattern.compile('一居：.*二居').matcher(rentPrice)
-                while (m.find()) sheet.getRow(i).getCell(62).setCellValue(m.group()?.replaceAll('一居：', '')?.replaceAll('二居', '')?.trim())
-                def m2 = java.util.regex.Pattern.compile('二居：.*三居').matcher(rentPrice)
-                while (m2.find()) sheet.getRow(i).getCell(63).setCellValue(m2.group()?.replaceAll('二居：', '')?.replaceAll('三居', '')?.trim())
-                def m1 = java.util.regex.Pattern.compile('三居：.*单间').matcher(rentPrice)
-                while (m1.find()) sheet.getRow(i).getCell(64).setCellValue(m1.group()?.replaceAll('三居：', '')?.replaceAll('单间', '')?.trim())
-                def m3 = java.util.regex.Pattern.compile('单间：.*').matcher(rentPrice)
-                while (m3.find()) sheet.getRow(i).getCell(65).setCellValue(m3.group()?.replaceAll('单间：', '')?.trim())
+        try {
+            HSSFSheet sheet = excel.getSheet('Sheet1')
+            for (int i = 0; i <= sheet.getLastRowNum(); i++) {
+                String code = RentInfo.rentExcel.get(i)
+                String rentPrice = RentInfo.rentPage.get(code)
+                if (rentPrice != null) {
+                    rentPrice = rentPrice.replaceAll("租金指导价：", "")
+                    sheet.getRow(i).getCell(10).setCellValue(rentPrice.trim())
+                    def m = java.util.regex.Pattern.compile('一居：.*二居').matcher(rentPrice)
+                    while (m.find()) sheet.getRow(i).getCell(62).setCellValue(m.group()?.replaceAll('一居：', '')?.replaceAll('二居', '')?.trim())
+                    def m2 = java.util.regex.Pattern.compile('二居：.*三居').matcher(rentPrice)
+                    while (m2.find()) sheet.getRow(i).getCell(63).setCellValue(m2.group()?.replaceAll('二居：', '')?.replaceAll('三居', '')?.trim())
+                    def m1 = java.util.regex.Pattern.compile('三居：.*单间').matcher(rentPrice)
+                    while (m1.find()) sheet.getRow(i).getCell(64).setCellValue(m1.group()?.replaceAll('三居：', '')?.replaceAll('单间', '')?.trim())
+                    def m3 = java.util.regex.Pattern.compile('单间：.*').matcher(rentPrice)
+                    while (m3.find()) sheet.getRow(i).getCell(65).setCellValue(m3.group()?.replaceAll('单间：', '')?.trim())
+                }
             }
-        }
-        for (int i = 0; i <= sheet.getLastRowNum(); i++) {
-            String code = BuildingNumberInfo.buildingNumberExcel.get(i)
-            String buildingNum = BuildingNumberInfo.buildingNumberPage.get(code)
-            if (buildingNum != null) {
-                sheet.getRow(i).getCell(19).setCellValue(buildingNum.replaceAll('楼栋总数：', ''))
+            for (int i = 0; i <= sheet.getLastRowNum(); i++) {
+                String code = BuildingNumberInfo.buildingNumberExcel.get(i)
+                String buildingNum = BuildingNumberInfo.buildingNumberPage.get(code)
+                if (buildingNum != null) {
+                    sheet.getRow(i).getCell(19).setCellValue(buildingNum.replaceAll('楼栋总数：', ''))
+                }
             }
+        } catch (Exception ex) {
+            System.out.print('---------------------' + ex.getMessage() + '---------------------')
         }
     }
 

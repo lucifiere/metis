@@ -19,4 +19,9 @@ class BuildingNumberInfo {
         r
     }
 
+    public static reset(){
+        buildingNumberPage = [:]
+        buildingNumberExcel = [:]
+    }
+
 }
